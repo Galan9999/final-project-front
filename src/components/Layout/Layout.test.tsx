@@ -7,7 +7,7 @@ import Loader from "../Loader/Loader";
 describe("Given the Layout component", () => {
   describe("When rendered", () => {
     test("Then it should show a header with the logo of 'sentio'", () => {
-      const expectedText = "logo";
+      const expectedText = "logo of a brain with sentio written on the bottom";
 
       renderWithRouters({ ui: <Layout /> });
 

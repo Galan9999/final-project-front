@@ -6,7 +6,6 @@
     "@fontsource/acme": "^4.5.10",
     "@fontsource/belleza": "^4.5.11",
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
-    "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@reduxjs/toolkit": "^1.9.3",
     "@testing-library/jest-dom": "^5.16.5",
@@ -62,7 +61,8 @@
   "jest": {
     "collectCoverageFrom": [
       "!src/index.tsx",
-      "!src/setupTests.ts"
+      "!src/setupTests.ts",
+      "!src/assets/icons"
     ]
   }
 }
