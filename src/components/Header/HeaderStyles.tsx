@@ -6,7 +6,6 @@ const HeaderStyled = styled.div`
   background-color: ${(props) => props.theme.colors.secondaryColor};
   padding: ${(props) => props.theme.padding};
   border-radius: ${(props) => props.theme.borderRadius};
-  min-width: 320px;
   width: 100%;
 
   .header {
@@ -14,11 +13,16 @@ const HeaderStyled = styled.div`
       width: 100%;
     }
 
+    &__logo {
+      width: 60px;
+      height: 56px;
+      padding-left: 10px;
+    }
+
     &__navigation {
       padding-left: 10px;
       display: flex;
       justify-content: flex-end;
-      justify-content: space-between;
       width: 100%;
     }
 
