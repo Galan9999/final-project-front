@@ -2,13 +2,18 @@ import styled from "styled-components";
 
 const HeaderStyled = styled.div`
   display: flex;
-  width: 100%;
   align-items: center;
   background-color: ${(props) => props.theme.colors.secondaryColor};
   padding: ${(props) => props.theme.padding};
   border-radius: ${(props) => props.theme.borderRadius};
+  min-width: 320px;
+  width: 100%;
 
   .header {
+    &__container {
+      width: 100%;
+    }
+
     &__navigation {
       padding-left: 10px;
       display: flex;
@@ -21,6 +26,10 @@ const HeaderStyled = styled.div`
       width: 60px;
       height: 56px;
       padding-left: 10px;
+
+      &::isactive {
+        color: black;
+      }
     }
 
     &__log-in {
@@ -40,6 +49,10 @@ const HeaderStyled = styled.div`
       height: 56px;
       padding-left: 10px;
     }
+  }
+
+  .active {
+    color: #484a48;
   }
 `;
 

@@ -2,44 +2,57 @@ import { createGlobalStyle } from "styled-components";
 import "@fontsource/belleza";
 
 const GlobalStyles = createGlobalStyle`
-* {
-box-sizing: border-box;
+
+*, ::after, ::before {
+  box-sizing: border-box;
 }
 
-root {
+#root {
   height:100%;
 }
+
 body {
   margin: 0;
   font-family: 'Belleza', sans serif;
-  padding: 20px 10px;
+  display: flex;
   background-color: white;
-  min-height: 100vh;
+  width: 100%;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5, 
+h6 {
+  margin: 0;
+}
+  
 ul,
-ol,
 li {
   margin: 0;
   padding: 0;
   list-style: none;
-  
 }
+
 button {
-  font-family: inherit;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 20px;
-  cursor: pointer;
+  background-color: transparent;
   border: none;
+  padding: 0;
+  cursor: pointer;
 }
+
 input {
   font-family: inherit;
+    all: unset;
 }
-h1,
-h2 {
-  font-size: 30px;
-  margin: 0;
+
+a,
+a:focus,
+a:active,
+a:visited {
+  color: inherit;
+  text-decoration: none;
 }
 `;
 
