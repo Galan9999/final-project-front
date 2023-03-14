@@ -1,12 +1,12 @@
-import {} from "../components/Modals/toasts";
+import { useAppDispatch } from "../store/hooks";
+import { loginUserActionCreator } from "../store/features/user/userSlice";
 import {
   setIsLoadingActionCreator,
+  setIsErrorModalActionCreator,
   unsetIsLoadingActionCreator,
+  unsetIsErrorModalActionCreator,
 } from "../store/features/ui/uiSlice";
-import { loginUserActionCreator } from "../store/features/user/userSlice";
-import { useAppDispatch } from "../store/hooks";
 import { LoginCredentials } from "../types";
-import modal from "../components/Modals/toasts";
 import { errorTypes } from "./types";
 
 const ApiUrl = process.env.REACT_APP_URL_API_USERS;
@@ -21,6 +21,8 @@ const useUserApi = () => {
 
   const loginUser = async (userCredentials: LoginCredentials) => {
     try {
+      uiDispatch(unsetIsErrorModalActionCreator());
+
       uiDispatch(setIsLoadingActionCreator());
       const response = await fetch(`${ApiUrl}${userEndpoint}${loginEndpoint}`, {
         method: "POST",
@@ -29,15 +31,13 @@ const useUserApi = () => {
         },
         body: JSON.stringify(userCredentials),
       });
-      uiDispatch(unsetIsLoadingActionCreator());
 
       if (response.status === 401) {
-        modal("error", invalidCredentialsErrorMessage);
-        return;
+        throw new Error(invalidCredentialsErrorMessage);
       }
 
-      if (response.status === 429) {
-        throw new Error();
+      if (!response.ok) {
+        throw new Error(defaultErrorMessage);
       }
 
       const { token } = await response.json();
@@ -45,8 +45,11 @@ const useUserApi = () => {
       localStorage.setItem("token", token);
 
       dispatch(loginUserActionCreator(token));
+
+      uiDispatch(unsetIsLoadingActionCreator());
     } catch (error) {
-      modal("error", defaultErrorMessage);
+      uiDispatch(unsetIsLoadingActionCreator());
+      uiDispatch(setIsErrorModalActionCreator((error as Error).message));
     }
   };
 

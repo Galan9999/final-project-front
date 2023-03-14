@@ -9,9 +9,9 @@ import {
   credentialsErrorHandler,
   internalServerErrorHandler,
 } from "../mocks/handlers";
-import { toast } from "react-toastify";
 import {
   setIsLoadingActionCreator,
+  setIsErrorModalActionCreator,
   unsetIsLoadingActionCreator,
 } from "../store/features/ui/uiSlice";
 
@@ -26,8 +26,6 @@ const mockedWrongCredentials: LoginCredentials = {
 };
 
 const spiedDispatch = jest.spyOn(store, "dispatch");
-
-const mockedToastErrorFunction = jest.spyOn(toast, "error");
 
 beforeAll(() => jest.clearAllMocks());
 
@@ -49,9 +47,12 @@ describe("Given the useUserApi function", () => {
     test("Then is should call the Dispatch twice with the set and unsetIsLoading action", async () => {
       await loginUser(mockedRightCredentials);
 
-      expect(spiedDispatch).toHaveBeenCalledWith(setIsLoadingActionCreator());
+      const setIsloadinAction = setIsLoadingActionCreator();
+      const unsetIsLoadingAction = unsetIsLoadingActionCreator();
 
-      expect(spiedDispatch).toHaveBeenCalledWith(unsetIsLoadingActionCreator());
+      expect(spiedDispatch).toHaveBeenCalledWith(setIsloadinAction);
+
+      expect(spiedDispatch).toHaveBeenCalledWith(unsetIsLoadingAction);
     });
   });
 
@@ -59,8 +60,9 @@ describe("Given the useUserApi function", () => {
     beforeEach(() => {
       server.use(...credentialsErrorHandler);
     });
+    const expectedErrorMessage = "Invalid Credentials!";
 
-    test("Then it should call modal function with 'Invalid Credentials!'", async () => {
+    test("Then it should call dispatch with error 'Invalid Credentials'!", async () => {
       const {
         result: {
           current: { loginUser },
@@ -69,7 +71,9 @@ describe("Given the useUserApi function", () => {
 
       await loginUser(mockedWrongCredentials);
 
-      expect(mockedToastErrorFunction).toHaveBeenCalled();
+      const setModalAction = setIsErrorModalActionCreator(expectedErrorMessage);
+
+      expect(spiedDispatch).toHaveBeenCalledWith(setModalAction);
     });
   });
 
@@ -85,9 +89,11 @@ describe("Given the useUserApi function", () => {
         },
       } = renderHook(() => useUserApi(), { wrapper: Wrapper });
 
+      const unsetIsLoadingAction = unsetIsLoadingActionCreator();
+
       await loginUser(mockedRightCredentials);
 
-      expect(mockedToastErrorFunction).toHaveBeenCalled();
+      expect(spiedDispatch).toHaveBeenCalledWith(unsetIsLoadingAction);
     });
   });
 });
