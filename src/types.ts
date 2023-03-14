@@ -20,3 +20,11 @@ export interface ModalStructure {
   message: string;
   isError: boolean;
 }
+
+export interface UiLoadingStructure {
+  user: { isLogged: false; token: string };
+  ui: {
+    isLoading: true;
+    modal: { isError: false; message: string };
+  };
+}

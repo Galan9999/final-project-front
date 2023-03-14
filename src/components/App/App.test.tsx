@@ -7,7 +7,7 @@ describe("Given the App component", () => {
     test("Then it should show a Header with the logo of 'sentio'", () => {
       const expectedText = "logo";
 
-      renderWithRouters();
+      renderWithRouters({});
 
       const ariaLabelText = screen.getByLabelText(expectedText);
 
@@ -19,7 +19,7 @@ describe("Given the App component", () => {
     test("Then it should show the LoginPage with a 'log-in' heading", async () => {
       const loginRoute = "log-in";
 
-      renderWithRouters();
+      renderWithRouters({});
 
       const user = userEvent.setup();
 
