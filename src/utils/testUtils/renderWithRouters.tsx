@@ -11,7 +11,7 @@ const getComponentRouter = (ui: JSX.Element) =>
       element: ui,
     },
     {
-      path: "/home",
+      path: "/login",
       element: <></>,
     },
   ]);
