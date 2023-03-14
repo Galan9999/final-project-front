@@ -1,5 +1,8 @@
 import { useAppDispatch } from "../store/hooks";
-import { loginUserActionCreator } from "../store/features/user/userSlice";
+import {
+  loginUserActionCreator,
+  logoutUserActionCreator,
+} from "../store/features/user/userSlice";
 import {
   setIsLoadingActionCreator,
   setIsErrorModalActionCreator,
@@ -53,6 +56,12 @@ const useUserApi = () => {
     }
   };
 
-  return { loginUser };
+  const logOutUser = () => {
+    localStorage.removeItem("token");
+
+    dispatch(logoutUserActionCreator());
+  };
+
+  return { loginUser, logOutUser };
 };
 export default useUserApi;
