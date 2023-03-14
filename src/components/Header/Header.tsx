@@ -24,11 +24,10 @@ const Header = (): JSX.Element => {
           />
         </NavLink>
 
-        <NavLink to="/login">
+        <NavLink to="/login" aria-label="login">
           <FontAwesomeIcon
             icon={faArrowRightToBracket}
             className="header__log-in"
-            aria-label="login"
           />
         </NavLink>
 
