@@ -1,5 +1,5 @@
 import { screen } from "@testing-library/react";
-import renderWithProviders from "../../utils/testUtils/renderWithProviders";
+import renderWithRouters from "../../utils/testUtils/renderWithRouters";
 import Header from "./Header";
 
 describe("Given the Header component", () => {
@@ -7,7 +7,7 @@ describe("Given the Header component", () => {
     test("Then it should show the sentio's logo", () => {
       const expectedAriaLabelText = "logo";
 
-      renderWithProviders(<Header />);
+      renderWithRouters(<Header />);
 
       const logoIcon = screen.getByLabelText(expectedAriaLabelText);
 
@@ -18,7 +18,7 @@ describe("Given the Header component", () => {
   test("Then it should show my list logo", () => {
     const expectedAriaLabelText = "my-list";
 
-    renderWithProviders(<Header />);
+    renderWithRouters(<Header />);
 
     const myListIcon = screen.getByLabelText(expectedAriaLabelText);
 
@@ -28,7 +28,7 @@ describe("Given the Header component", () => {
   test("Then it should show login logo", () => {
     const expectedAriaLabelText = "login";
 
-    renderWithProviders(<Header />);
+    renderWithRouters(<Header />);
 
     const LoginIcon = screen.getByLabelText(expectedAriaLabelText);
 
@@ -38,7 +38,7 @@ describe("Given the Header component", () => {
   test("Then it should show logout logo", () => {
     const expectedAriaLabelText = "logout";
 
-    renderWithProviders(<Header />);
+    renderWithRouters(<Header />);
 
     const LogoutIcon = screen.getByLabelText(expectedAriaLabelText);
 
@@ -48,7 +48,7 @@ describe("Given the Header component", () => {
   test("Then it should show home logo", () => {
     const expectedAriaLabelText = "home";
 
-    renderWithProviders(<Header />);
+    renderWithRouters(<Header />);
 
     const HomeIcon = screen.getByLabelText(expectedAriaLabelText);
 
