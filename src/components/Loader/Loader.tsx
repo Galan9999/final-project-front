@@ -3,7 +3,7 @@ import LoaderStyled from "./LoaderStyles";
 const Loader = (): JSX.Element => {
   return (
     <LoaderStyled>
-      <span data-testid="loader" className="loader"></span>
+      <span aria-label="the app is loading" className="loader"></span>
     </LoaderStyled>
   );
 };
