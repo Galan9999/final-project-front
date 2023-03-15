@@ -1,5 +1,8 @@
-import { screen } from "@testing-library/react";
-import renderWithRouters from "../../utils/testUtils/renderWithRouters";
+import { screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import renderWithRouters, {
+  RouterRender,
+} from "../../utils/testUtils/renderWithRouters";
 import Header from "./Header";
 
 describe("Given the Header component", () => {
@@ -33,6 +36,32 @@ describe("Given the Header component", () => {
       const HomeIcon = screen.getByLabelText(expectedAriaLabelText);
 
       expect(HomeIcon).toBeInTheDocument();
+    });
+  });
+
+  describe("When it is rendered with a user logged in and user click on logout button", () => {
+    test("Then it should show a", async () => {
+      const myListRoute = "link to my list";
+
+      const routerState: RouterRender = {
+        preloadedState: {
+          user: { isLogged: true, token: "token" },
+        },
+      };
+
+      renderWithRouters(routerState);
+
+      const myListLink = screen.getByRole("link", { name: myListRoute });
+
+      await waitFor(async () => {
+        await userEvent.click(myListLink);
+      });
+
+      const loginLink = screen.getByRole("link", {
+        name: myListRoute,
+      });
+
+      expect(loginLink).toBeInTheDocument();
     });
   });
 });
