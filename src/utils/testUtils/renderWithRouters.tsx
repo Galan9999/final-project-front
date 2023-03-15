@@ -4,7 +4,7 @@ import { router } from "../../router/router";
 import { RootState } from "../../store/store";
 import renderWithProviders from "./renderWithProviders";
 
-export interface RouterRender {
+export interface RouterRenderOptions {
   ui?: React.ReactElement;
   preloadedState?: PreloadedState<RootState>;
 }
@@ -21,7 +21,7 @@ const getComponentRouter = (ui: JSX.Element) =>
     },
   ]);
 
-const renderWithRouters = ({ ui, preloadedState }: RouterRender) => {
+const renderWithRouters = ({ ui, preloadedState }: RouterRenderOptions) => {
   const customRouter = ui ? getComponentRouter(ui) : router;
 
   return renderWithProviders(
