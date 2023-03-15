@@ -3,13 +3,15 @@ import { ReactComponent as Logo } from "../../assets/icons/logo.svg";
 import { ReactComponent as RightArrow } from "../../assets/icons/rightArrow.svg";
 import { ReactComponent as BackArrow } from "../../assets/icons/backArrow.svg";
 import { ReactComponent as MyList } from "../../assets/icons/myList.svg";
-import { ReactComponent as Book } from "../../assets/icons/book.svg";
+import { ReactComponent as Home } from "../../assets/icons/home.svg";
 
 import { useAppSelector } from "../../store/hooks";
 import HeaderStyled from "./HeaderStyles";
+import useUserApi from "../../hooks/useUserApi";
 
 const Header = (): JSX.Element => {
   const { isLogged } = useAppSelector((state) => state.user);
+  const { logOutUser } = useUserApi();
 
   return (
     <HeaderStyled className="header">
@@ -33,13 +35,13 @@ const Header = (): JSX.Element => {
         )}
 
         {isLogged && (
-          <NavLink to="/">
-            <BackArrow className="header__logout" aria-label="link to logout" />
-          </NavLink>
+          <button type={"button"} onClick={logOutUser}>
+            <BackArrow className="header__logout" aria-label="logout button" />
+          </button>
         )}
 
         <NavLink to="/home">
-          <Book className="header__to-home" aria-label="link to home" />
+          <Home className="header__home" aria-label="link to home" />
         </NavLink>
       </div>
     </HeaderStyled>

@@ -26,7 +26,7 @@ const HeaderStyled = styled.div`
       width: 100%;
     }
 
-    &__to-my-list {
+    &__my-list {
       width: 60px;
       height: 56px;
       padding-left: 10px;
@@ -36,27 +36,20 @@ const HeaderStyled = styled.div`
       }
     }
 
-    &__log-in {
+    &__login {
       width: 60px;
       height: 56px;
-      padding-left: 10px;
     }
 
-    &__log-out {
+    &__logout {
       width: 60px;
       height: 56px;
-      padding-left: 10px;
     }
 
-    &__to-home {
+    &__home {
       width: 60px;
       height: 56px;
-      padding-left: 10px;
     }
-  }
-
-  .active {
-    color: #484a48;
   }
 `;
 
