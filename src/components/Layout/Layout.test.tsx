@@ -2,7 +2,6 @@ import { screen } from "@testing-library/react";
 import { preloadedIsLoadingUiState } from "../../mocks/uiPreloadedStates";
 import renderWithRouters from "../../utils/testUtils/renderWithRouters";
 import Layout from "../Layout/Layout";
-import Loader from "../Loader/Loader";
 
 describe("Given the Layout component", () => {
   describe("When rendered", () => {
@@ -22,7 +21,7 @@ describe("Given the Layout component", () => {
       const expectedLabelText = "the app is loading";
 
       renderWithRouters({
-        ui: <Loader />,
+        ui: <Layout />,
         preloadedState: preloadedIsLoadingUiState,
       });
 
