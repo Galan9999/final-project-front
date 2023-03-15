@@ -35,9 +35,11 @@ const Header = (): JSX.Element => {
         )}
 
         {isLogged && (
-          <button type={"button"} onClick={logOutUser}>
-            <BackArrow className="header__logout" aria-label="logout button" />
-          </button>
+          <BackArrow
+            onClick={logOutUser}
+            className="header__logout"
+            aria-label="logout button"
+          />
         )}
 
         <NavLink to="/home">
