@@ -1,7 +1,7 @@
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import renderWithRouters, {
-  RouterRender,
+  RouterRenderOptions,
 } from "../../utils/testUtils/renderWithRouters";
 import Header from "./Header";
 
@@ -43,7 +43,7 @@ describe("Given the Header component", () => {
     test("Then it should show a", async () => {
       const myListRoute = "link to my list";
 
-      const routerState: RouterRender = {
+      const routerState: RouterRenderOptions = {
         preloadedState: {
           user: { isLogged: true, token: "token" },
         },

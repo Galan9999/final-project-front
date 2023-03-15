@@ -85,7 +85,7 @@ describe("Given the useUserApi function", () => {
       server.use(...internalServerErrorHandler);
     });
 
-    test("Then it should call modal function with 'Invalid Credentials!'", async () => {
+    test("Then it should call dispatch with and error 'Invalid Credentials!'", async () => {
       const {
         result: {
           current: { loginUser },

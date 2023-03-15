@@ -61,8 +61,7 @@
   "jest": {
     "collectCoverageFrom": [
       "!src/index.tsx",
-      "!src/setupTests.ts",
-      "!src/assets/icons"
+      "!src/setupTests.ts"
     ]
   }
 }
