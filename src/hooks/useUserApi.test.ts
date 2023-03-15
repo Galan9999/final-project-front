@@ -3,7 +3,10 @@ import useUserApi from "./useUserApi";
 import type { LoginCredentials } from "../types";
 import { store } from "../store/store";
 import Wrapper from "../mocks/Wrapper";
-import { loginUserActionCreator } from "../store/features/user/userSlice";
+import {
+  loginUserActionCreator,
+  logoutUserActionCreator,
+} from "../store/features/user/userSlice";
 import { server } from "../mocks/server";
 import {
   credentialsErrorHandler,
@@ -94,6 +97,23 @@ describe("Given the useUserApi function", () => {
       await loginUser(mockedRightCredentials);
 
       expect(spiedDispatch).toHaveBeenCalledWith(unsetIsLoadingAction);
+    });
+  });
+
+  describe("Given the logOut function", () => {
+    describe("When it is called", () => {
+      test("Then it should logOut the user", () => {
+        const {
+          result: {
+            current: { logOutUser },
+          },
+        } = renderHook(() => useUserApi(), { wrapper: Wrapper });
+
+        const actionCall = logoutUserActionCreator();
+        logOutUser();
+
+        expect(spiedDispatch).toBeCalledWith(actionCall);
+      });
     });
   });
 });
