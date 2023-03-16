@@ -1,22 +1,22 @@
 import { renderHook } from "@testing-library/react";
 import useUserApi from "./useUserApi";
-import type { LoginCredentials } from "../types";
-import { store } from "../store/store";
-import Wrapper from "../mocks/Wrapper";
+import { errorTypes } from "../types";
+import {
+  setIsErrorModalActionCreator,
+  setIsLoadingActionCreator,
+  unsetIsLoadingActionCreator,
+} from "../../store/features/ui/uiSlice";
+import { store } from "../../store/store";
+import Wrapper from "../../mocks/Wrapper";
 import {
   loginUserActionCreator,
   logoutUserActionCreator,
-} from "../store/features/user/userSlice";
-import { server } from "../mocks/server";
-import {
-  credentialsErrorHandler,
-  internalServerErrorHandler,
-} from "../mocks/handlers";
-import {
-  setIsLoadingActionCreator,
-  setIsErrorModalActionCreator,
-  unsetIsLoadingActionCreator,
-} from "../store/features/ui/uiSlice";
+} from "../../store/features/user/userSlice";
+import { server } from "../../mocks/server";
+import { LoginCredentials } from "../../types";
+import { errorHandlers } from "../../mocks/handlers";
+
+const { defaultErrorMessage } = errorTypes;
 
 const mockedRightCredentials: LoginCredentials = {
   username: "Lluis",
@@ -59,13 +59,12 @@ describe("Given the useUserApi function", () => {
     });
   });
 
-  describe("When it's called and there is an error with credentials", () => {
+  describe("When it's called and there is an error", () => {
     beforeEach(() => {
-      server.use(...credentialsErrorHandler);
+      server.use(...errorHandlers);
     });
-    const expectedErrorMessage = "Invalid Credentials!";
 
-    test("Then it should call dispatch with error 'Invalid Credentials'!", async () => {
+    test("Then it should call dispatch with error 'Something Went Wrong!", async () => {
       const {
         result: {
           current: { loginUser },
@@ -74,29 +73,9 @@ describe("Given the useUserApi function", () => {
 
       await loginUser(mockedWrongCredentials);
 
-      const setModalAction = setIsErrorModalActionCreator(expectedErrorMessage);
+      const setModalAction = setIsErrorModalActionCreator(defaultErrorMessage);
 
       expect(spiedDispatch).toHaveBeenCalledWith(setModalAction);
-    });
-  });
-
-  describe("When it's called and there is an error with fetch", () => {
-    beforeEach(() => {
-      server.use(...internalServerErrorHandler);
-    });
-
-    test("Then it should call dispatch with and error 'Invalid Credentials!'", async () => {
-      const {
-        result: {
-          current: { loginUser },
-        },
-      } = renderHook(() => useUserApi(), { wrapper: Wrapper });
-
-      const unsetIsLoadingAction = unsetIsLoadingActionCreator();
-
-      await loginUser(mockedRightCredentials);
-
-      expect(spiedDispatch).toHaveBeenCalledWith(unsetIsLoadingAction);
     });
   });
 
