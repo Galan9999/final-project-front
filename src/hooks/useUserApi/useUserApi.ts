@@ -1,22 +1,22 @@
-import { useAppDispatch } from "../store/hooks";
-import {
-  loginUserActionCreator,
-  logoutUserActionCreator,
-} from "../store/features/user/userSlice";
+import { useAppDispatch } from "../../store/hooks";
+import { LoginCredentials } from "../../types";
 import {
   setIsLoadingActionCreator,
   setIsErrorModalActionCreator,
   unsetIsLoadingActionCreator,
   unsetIsErrorModalActionCreator,
-} from "../store/features/ui/uiSlice";
-import { LoginCredentials } from "../types";
-import { errorTypes } from "./types";
+} from "../../store/features/ui/uiSlice";
+import {
+  loginUserActionCreator,
+  logoutUserActionCreator,
+} from "../../store/features/user/userSlice";
+import { errorTypes } from "../types";
 
 const ApiUrl = process.env.REACT_APP_URL_API_USERS;
 const userEndpoint = "/users";
 const loginEndpoint = "/login";
 
-const { defaultErrorMessage, invalidCredentialsErrorMessage } = errorTypes;
+const { defaultErrorMessage } = errorTypes;
 
 const useUserApi = () => {
   const dispatch = useAppDispatch();
@@ -35,12 +35,8 @@ const useUserApi = () => {
         body: JSON.stringify(userCredentials),
       });
 
-      if (response.status === 401) {
-        throw new Error(invalidCredentialsErrorMessage);
-      }
-
       if (!response.ok) {
-        throw new Error(defaultErrorMessage);
+        throw new Error();
       }
 
       const { token } = await response.json();
@@ -52,7 +48,7 @@ const useUserApi = () => {
       uiDispatch(unsetIsLoadingActionCreator());
     } catch (error) {
       uiDispatch(unsetIsLoadingActionCreator());
-      uiDispatch(setIsErrorModalActionCreator((error as Error).message));
+      uiDispatch(setIsErrorModalActionCreator(defaultErrorMessage));
     }
   };
 

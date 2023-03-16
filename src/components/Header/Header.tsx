@@ -7,7 +7,7 @@ import { ReactComponent as Home } from "../../assets/icons/home.svg";
 
 import { useAppSelector } from "../../store/hooks";
 import HeaderStyled from "./HeaderStyles";
-import useUserApi from "../../hooks/useUserApi";
+import useUserApi from "../../hooks/useUserApi/useUserApi";
 
 const Header = (): JSX.Element => {
   const { isLogged } = useAppSelector((state) => state.user);
