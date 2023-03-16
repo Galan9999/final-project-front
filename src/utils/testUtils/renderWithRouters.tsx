@@ -1,5 +1,6 @@
 import { PreloadedState } from "@reduxjs/toolkit";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import LoginPage from "../../pages/LoginPage/LoginPage";
 import { router } from "../../router/router";
 import { RootState } from "../../store/store";
 import renderWithProviders from "./renderWithProviders";
@@ -17,6 +18,10 @@ const getComponentRouter = (ui: JSX.Element) =>
     },
     {
       path: "/login",
+      element: <LoginPage />,
+    },
+    {
+      path: "/my-list",
       element: <></>,
     },
   ]);
