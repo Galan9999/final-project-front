@@ -41,7 +41,7 @@ const LoginForm = () => {
         placeholder="introduce username"
         name="username"
         id="username"
-        type="username"
+        type="text"
         required
       ></input>
 
