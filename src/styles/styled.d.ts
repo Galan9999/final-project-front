@@ -10,7 +10,9 @@ declare module "styled-components" {
       textColor: string;
     };
     fontSize: {
-      mainSize: string;
+      bigSize: string;
+      mediumSize: string;
+      smallSize: string;
     };
     borderRadius: string;
     padding: string;

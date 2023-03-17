@@ -10,7 +10,9 @@ const theme: DefaultTheme = {
     textColor: "#000000",
   },
   fontSize: {
-    mainSize: "20px",
+    bigSize: "24px",
+    mediumSize: "20px",
+    smallSize: "16px",
   },
   borderRadius: "10px",
   padding: "20px",

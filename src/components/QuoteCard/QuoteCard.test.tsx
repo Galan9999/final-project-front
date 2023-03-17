@@ -26,7 +26,7 @@ describe("Given the QuoteCard component", () => {
 
       const authorName = screen.getByRole("heading", {
         name: expectedAriaLabelTextName,
-        level: 1,
+        level: 2,
       });
 
       expect(authorName).toBeInTheDocument();

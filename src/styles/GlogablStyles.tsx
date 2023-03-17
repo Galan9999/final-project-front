@@ -17,6 +17,7 @@ body {
   background-color: white;
   min-height: 100vh;
 }
+p,
 ul,
 ol,
 li {
@@ -37,6 +38,7 @@ button {
 input {
   font-family: inherit;
 }
+
 h1,
 h2 {
   font-size: 30px;
