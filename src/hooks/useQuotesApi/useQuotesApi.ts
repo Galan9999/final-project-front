@@ -9,8 +9,6 @@ import { useAppDispatch } from "../../store/hooks";
 import { QuotesStructure } from "../../types";
 import { errorTypes } from "../types";
 
-const { defaultErrorMessage } = errorTypes;
-
 const quotesRelativePatch = "/quotes";
 
 const useQuotesApi = () => {
@@ -25,7 +23,10 @@ const useQuotesApi = () => {
       const { quotes } = (await response.json()) as { quotes: QuotesStructure };
 
       if (!response.ok) {
-        throw new Error();
+        if (response.status === 404) {
+          throw new Error(errorTypes.cuotesNotFoundErrorMessage);
+        }
+        throw new Error(errorTypes.defaultErrorMessage);
       }
 
       dispatch(loadQuotesActionCreator(quotes));
@@ -34,7 +35,7 @@ const useQuotesApi = () => {
     } catch (error) {
       uiDispatch(unsetIsLoadingActionCreator());
 
-      uiDispatch(setIsErrorModalActionCreator(defaultErrorMessage));
+      uiDispatch(setIsErrorModalActionCreator((error as Error).message));
     }
   }, [dispatch, uiDispatch]);
 

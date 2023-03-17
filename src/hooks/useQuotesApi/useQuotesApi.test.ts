@@ -3,10 +3,17 @@ import { errorHandlers } from "../../mocks/handlers";
 import { server } from "../../mocks/server";
 import Wrapper from "../../mocks/Wrapper";
 import { loadQuotesActionCreator } from "../../store/features/quotes/quotesSlice";
+import {
+  setIsErrorModalActionCreator,
+  unsetIsLoadingActionCreator,
+} from "../../store/features/ui/uiSlice";
 import { store } from "../../store/store";
+import { errorTypes } from "../types";
 import useQuotesApi from "./useQuotesApi";
 
 const spiedDispatch = jest.spyOn(store, "dispatch");
+
+const { cuotesNotFoundErrorMessage, defaultErrorMessage } = errorTypes;
 
 beforeAll(() => jest.clearAllMocks());
 
@@ -55,7 +62,29 @@ describe("Given the useQuotesApi function", () => {
 
       await loadQuotes();
 
-      expect(spiedDispatch).toHaveBeenCalledTimes(3);
+      expect(spiedDispatch).toHaveBeenCalledWith(
+        setIsErrorModalActionCreator(cuotesNotFoundErrorMessage)
+      );
+    });
+  });
+
+  describe("When there is a prortgrtth the response from the api", () => {
+    beforeEach(() => {
+      server.use(errorHandlers[2]);
+    });
+    test("Then it should return and error with message 'Something Went Wrong!'", async () => {
+      const {
+        result: {
+          current: { loadQuotes },
+        },
+      } = renderHook(() => useQuotesApi(), { wrapper: Wrapper });
+
+      await loadQuotes();
+
+      expect(spiedDispatch).toHaveBeenCalledWith(unsetIsLoadingActionCreator());
+      expect(spiedDispatch).toHaveBeenCalledWith(
+        setIsErrorModalActionCreator(defaultErrorMessage)
+      );
     });
   });
 });
