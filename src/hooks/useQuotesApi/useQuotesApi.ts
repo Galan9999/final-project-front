@@ -14,13 +14,13 @@ const quotesRelativePatch = "/quotes";
 const useQuotesApi = () => {
   const dispatch = useAppDispatch();
   const uiDispatch = useAppDispatch();
+
   const loadQuotes = useCallback(async () => {
     try {
       uiDispatch(setIsLoadingActionCreator());
       const response = await fetch(
         `${process.env.REACT_APP_URL_API_USERS}${quotesRelativePatch}`
       );
-      const { quotes } = (await response.json()) as { quotes: QuotesStructure };
 
       if (!response.ok) {
         if (response.status === 404) {
@@ -28,6 +28,7 @@ const useQuotesApi = () => {
         }
         throw new Error(errorTypes.defaultErrorMessage);
       }
+      const { quotes } = (await response.json()) as { quotes: QuotesStructure };
 
       dispatch(loadQuotesActionCreator(quotes));
 

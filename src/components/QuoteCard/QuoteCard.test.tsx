@@ -4,6 +4,7 @@ import renderWithRouters from "../../utils/testUtils/renderWithRouters";
 import QuoteCard from "./QuoteCard";
 
 const mockCard: QuoteStructure = {
+  id: "1",
   author: "Frida Kahlo",
   image:
     "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Frida_Kahlo%2C_by_Guillermo_Kahlo.jpg/440px-Frida_Kahlo%2C_by_Guillermo_Kahlo.jpg",

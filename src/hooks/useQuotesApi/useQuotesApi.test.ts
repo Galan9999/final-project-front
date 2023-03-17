@@ -15,11 +15,12 @@ const spiedDispatch = jest.spyOn(store, "dispatch");
 
 const { cuotesNotFoundErrorMessage, defaultErrorMessage } = errorTypes;
 
-beforeAll(() => jest.clearAllMocks());
+afterEach(() => jest.clearAllMocks());
 
-const mockedApiResponse = {
+const mockedQuotes = {
   quotes: [
     {
+      id: "1",
       author: "Frida Kahlo",
       image:
         "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Frida_Kahlo%2C_by_Guillermo_Kahlo.jpg/440px-Frida_Kahlo%2C_by_Guillermo_Kahlo.jpg",
@@ -44,16 +45,17 @@ describe("Given the useQuotesApi function", () => {
 
       await loadQuotes();
 
-      expect(spiedDispatch).toHaveBeenCalledWith(
-        loadQuotesActionCreator(mockedApiResponse.quotes)
+      expect(spiedDispatch).toHaveBeenNthCalledWith(
+        2,
+        loadQuotesActionCreator(mockedQuotes.quotes)
       );
     });
   });
-  describe("When there is a problem with the response from the api", () => {
+  describe("When there is no quote", () => {
     beforeEach(() => {
       server.use(...errorHandlers);
     });
-    test("Then it should return and error with message 'Something Went Wrong!'", async () => {
+    test("Then it should return and error with message 'Quote not found!'", async () => {
       const {
         result: {
           current: { loadQuotes },
@@ -68,7 +70,7 @@ describe("Given the useQuotesApi function", () => {
     });
   });
 
-  describe("When there is a prortgrtth the response from the api", () => {
+  describe("When there is a server problem with the response from the api", () => {
     beforeEach(() => {
       server.use(errorHandlers[2]);
     });
