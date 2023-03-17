@@ -1,6 +1,6 @@
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import renderWithRouters from "../../utils/testUtils/renderWithRouters";
+import renderWithRouters from "../../utils/testUtils/renderRouterWithProviders";
 
 describe("Given the App component", () => {
   describe("When rendered", () => {

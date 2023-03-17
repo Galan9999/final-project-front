@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import { mockedPreloadeStoreWithListState } from "../../mocks/quotesPreloadedStates";
-import renderWithRouters from "../../utils/testUtils/renderWithRouters";
+import renderWithRouters from "../../utils/testUtils/renderRouterWithProviders";
 import HomePage from "./HomePage";
 
 describe("Given the HomePage component", () => {

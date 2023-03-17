@@ -1,6 +1,6 @@
 import Modal from "./Modal";
 import { toast } from "react-toastify";
-import renderWithRouters from "../../utils/testUtils/renderWithRouters";
+import renderWithRouters from "../../utils/testUtils/renderRouterWithProviders";
 
 const getModals = jest.spyOn(toast, "error");
 

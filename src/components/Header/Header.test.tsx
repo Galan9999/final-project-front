@@ -2,7 +2,7 @@ import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import renderWithRouters, {
   RouterRenderOptions,
-} from "../../utils/testUtils/renderWithRouters";
+} from "../../utils/testUtils/renderRouterWithProviders";
 import Header from "./Header";
 
 describe("Given the Header component", () => {

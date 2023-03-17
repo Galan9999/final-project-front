@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import { preloadedIsLoadingUiState } from "../../mocks/uiPreloadedStates";
-import renderWithRouters from "../../utils/testUtils/renderWithRouters";
+import renderWithRouters from "../../utils/testUtils/renderRouterWithProviders";
 import Layout from "../Layout/Layout";
 
 describe("Given the Layout component", () => {

@@ -1,4 +1,4 @@
-import renderWithRouters from "../../utils/testUtils/renderWithRouters";
+import renderWithRouters from "../../utils/testUtils/renderRouterWithProviders";
 import Quotes from "./Quotes";
 import { mockedPreloadeStoreWithListState } from "../../mocks/quotesPreloadedStates";
 import { screen } from "@testing-library/react";

@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import { QuoteStructure } from "../../types";
-import renderWithRouters from "../../utils/testUtils/renderWithRouters";
+import renderWithRouters from "../../utils/testUtils/renderRouterWithProviders";
 import QuoteCard from "./QuoteCard";
 
 const mockCard: QuoteStructure = {
