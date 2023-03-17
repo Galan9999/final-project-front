@@ -22,14 +22,15 @@ export interface ModalStructure {
 }
 
 export interface UiLoadingStructure {
-  user: { isLogged: false; token: string };
+  user: { isLogged: boolean; token: string };
   ui: {
     isLoading: true;
-    modal: { isError: false; message: string };
+    modal: { isError: boolean; message: string };
   };
 }
 
 export interface QuoteStructure {
+  id: string;
   author: string;
   image: string;
   country: string;
@@ -40,3 +41,12 @@ export interface QuoteStructure {
 }
 
 export type QuotesStructure = QuoteStructure[];
+
+export interface StoreStructure {
+  user: { isLogged: boolean; token: string };
+  ui: {
+    isLoading: boolean;
+    modal: { isError: boolean; message: string };
+  };
+  quotes: QuotesStructure;
+}

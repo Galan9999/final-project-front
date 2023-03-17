@@ -6,6 +6,7 @@ describe("Given the quotes reducer function", () => {
     test("Then it should return a list of quotes", () => {
       const currentQuotesState: QuotesStructure = [
         {
+          id: "",
           author: "",
           image: "",
           country: "",
@@ -17,6 +18,7 @@ describe("Given the quotes reducer function", () => {
       ];
       const expectedQuotesState: QuotesStructure = [
         {
+          id: "",
           author: "Albert Einstein",
           image:
             "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Albert_Einstein_Head.jpg/440px-Albert_Einstein_Head.jpg",
