@@ -1,7 +1,11 @@
 import { rest } from "msw";
 import { errorTypes } from "../hooks/types";
 
-const { defaultErrorMessage, unauthorizedErrorMessage } = errorTypes;
+const {
+  defaultErrorMessage,
+  unauthorizedErrorMessage,
+  userNotFoundErrorMessage,
+} = errorTypes;
 
 const mockedQuotes = {
   quotes: [
@@ -38,6 +42,9 @@ export const errorHandlers = [
   }),
 
   rest.get(`${useUserApiUrl}/quotes`, async (req, res, ctx) => {
-    return res(ctx.status(404), ctx.json({ error: defaultErrorMessage }));
+    return res(ctx.status(404), ctx.json({ error: userNotFoundErrorMessage }));
+  }),
+  rest.get(`${useUserApiUrl}/quotes`, async (req, res, ctx) => {
+    return res(ctx.status(500), ctx.json({ error: defaultErrorMessage }));
   }),
 ];
