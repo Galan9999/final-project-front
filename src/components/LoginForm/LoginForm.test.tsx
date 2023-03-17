@@ -1,6 +1,6 @@
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import renderWithRouters from "../../utils/testUtils/renderWithRouters";
+import renderWithRouters from "../../utils/testUtils/renderRouterWithProviders";
 import LoginForm from "./LoginForm";
 
 const mockLoginUser = jest.fn();
