@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import { QuoteStructure } from "../../types";
-import renderWithRouters from "../../utils/testUtils/renderRouterWithProviders";
+import renderRouterWithProviders from "../../utils/testUtils/renderRouterWithProviders";
 import QuoteCard from "./QuoteCard";
 
 const mockCard: QuoteStructure = {
@@ -21,7 +21,7 @@ describe("Given the QuoteCard component", () => {
     test("Then it should show a card of René Descartes", () => {
       const expectedAriaLabelTextName = "Frida Kahlo";
 
-      renderWithRouters({
+      renderRouterWithProviders({
         ui: <QuoteCard quote={mockCard} />,
       });
 

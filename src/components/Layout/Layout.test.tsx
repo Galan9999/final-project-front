@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import { preloadedIsLoadingUiState } from "../../mocks/uiPreloadedStates";
-import renderWithRouters from "../../utils/testUtils/renderRouterWithProviders";
+import renderRouterWithProviders from "../../utils/testUtils/renderRouterWithProviders";
 import Layout from "../Layout/Layout";
 
 describe("Given the Layout component", () => {
@@ -8,7 +8,7 @@ describe("Given the Layout component", () => {
     test("Then it should show a header with the logo of 'sentio'", () => {
       const expectedText = "logo of a brain with sentio written on the bottom";
 
-      renderWithRouters({ ui: <Layout /> });
+      renderRouterWithProviders({ ui: <Layout /> });
 
       const ariaLabelText = screen.getByLabelText(expectedText);
 
@@ -20,7 +20,7 @@ describe("Given the Layout component", () => {
     test("Then it should show the loading animation", () => {
       const expectedLabelText = "the app is loading";
 
-      renderWithRouters({
+      renderRouterWithProviders({
         ui: <Layout />,
         preloadedState: preloadedIsLoadingUiState,
       });

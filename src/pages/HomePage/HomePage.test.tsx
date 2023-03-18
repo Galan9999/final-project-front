@@ -1,12 +1,12 @@
 import { screen } from "@testing-library/react";
 import { mockedPreloadeStoreWithListState } from "../../mocks/quotesPreloadedStates";
-import renderWithRouters from "../../utils/testUtils/renderRouterWithProviders";
+import renderRouterWithProviders from "../../utils/testUtils/renderRouterWithProviders";
 import HomePage from "./HomePage";
 
 describe("Given the HomePage component", () => {
   describe("When its rendered", () => {
     test("Then is should show a list of cards with two cards of Carles and Catalina authors", () => {
-      renderWithRouters({
+      renderRouterWithProviders({
         ui: <HomePage />,
         preloadedState: mockedPreloadeStoreWithListState,
       });

@@ -31,7 +31,10 @@ const getComponentRouter = (ui: JSX.Element) =>
     },
   ]);
 
-const renderWithRouters = ({ ui, preloadedState }: RouterRenderOptions) => {
+const renderRouterWithProviders = ({
+  ui,
+  preloadedState,
+}: RouterRenderOptions) => {
   const customRouter = ui ? getComponentRouter(ui) : router;
 
   return renderWithProviders(
@@ -40,4 +43,4 @@ const renderWithRouters = ({ ui, preloadedState }: RouterRenderOptions) => {
   );
 };
 
-export default renderWithRouters;
+export default renderRouterWithProviders;

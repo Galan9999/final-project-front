@@ -1,6 +1,6 @@
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import renderWithRouters from "../../utils/testUtils/renderRouterWithProviders";
+import renderRouterWithProviders from "../../utils/testUtils/renderRouterWithProviders";
 import LoginForm from "./LoginForm";
 
 const mockLoginUser = jest.fn();
@@ -14,7 +14,7 @@ describe("Given the LoginForm component", () => {
     test("Then it should show an input field with a label 'username'", () => {
       const inputLabelText = "username";
 
-      renderWithRouters({ ui: <LoginForm /> });
+      renderRouterWithProviders({ ui: <LoginForm /> });
 
       const inputField = screen.getByLabelText(inputLabelText);
 
@@ -24,7 +24,7 @@ describe("Given the LoginForm component", () => {
     test("Then is should show and input field with label 'password'", () => {
       const inputLableText = "password";
 
-      renderWithRouters({ ui: <LoginForm /> });
+      renderRouterWithProviders({ ui: <LoginForm /> });
 
       const inputField = screen.getByLabelText(inputLableText);
 
@@ -38,7 +38,7 @@ describe("Given the LoginForm component", () => {
       const inputPasswordText = "password";
       const buttonText = "log-in";
 
-      renderWithRouters({ ui: <LoginForm /> });
+      renderRouterWithProviders({ ui: <LoginForm /> });
 
       const renderedUsernameInput = screen.getByLabelText(inputUsernametext);
       const renderedPasswordInput = screen.getByLabelText(inputPasswordText);

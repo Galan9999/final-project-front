@@ -1,6 +1,6 @@
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import renderWithRouters, {
+import renderRouterWithProviders, {
   RouterRenderOptions,
 } from "../../utils/testUtils/renderRouterWithProviders";
 import Header from "./Header";
@@ -11,7 +11,7 @@ describe("Given the Header component", () => {
       const expectedAriaLabelText =
         "logo of a brain with sentio written on the bottom";
 
-      renderWithRouters({ ui: <Header /> });
+      renderRouterWithProviders({ ui: <Header /> });
 
       const logoIcon = screen.getByLabelText(expectedAriaLabelText);
 
@@ -21,7 +21,7 @@ describe("Given the Header component", () => {
     test("Then it should show login logo", () => {
       const expectedAriaLabelText = "link to login";
 
-      renderWithRouters({ ui: <Header /> });
+      renderRouterWithProviders({ ui: <Header /> });
 
       const LoginIcon = screen.getByLabelText(expectedAriaLabelText);
 
@@ -31,7 +31,7 @@ describe("Given the Header component", () => {
     test("Then it should show home logo", () => {
       const expectedAriaLabelText = "link to home";
 
-      renderWithRouters({ ui: <Header /> });
+      renderRouterWithProviders({ ui: <Header /> });
 
       const HomeIcon = screen.getByLabelText(expectedAriaLabelText);
 
@@ -49,7 +49,7 @@ describe("Given the Header component", () => {
         },
       };
 
-      renderWithRouters(routerState);
+      renderRouterWithProviders(routerState);
 
       const myListLink = screen.getByRole("link", { name: myListRoute });
 

@@ -1,13 +1,13 @@
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import renderWithRouters from "../../utils/testUtils/renderRouterWithProviders";
+import renderRouterWithProviders from "../../utils/testUtils/renderRouterWithProviders";
 
 describe("Given the App component", () => {
   describe("When rendered", () => {
     test("Then it should show a Header with the logo of 'sentio'", () => {
       const expectedText = "logo of a brain with sentio written on the bottom";
 
-      renderWithRouters({});
+      renderRouterWithProviders({});
 
       const ariaLabelText = screen.getByLabelText(expectedText);
 
@@ -19,7 +19,7 @@ describe("Given the App component", () => {
     test("Then it should show the LoginPage with a 'log-in' heading", async () => {
       const loginRoute = "log-in";
 
-      renderWithRouters({});
+      renderRouterWithProviders({});
 
       const user = userEvent.setup();
 
