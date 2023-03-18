@@ -24,7 +24,15 @@ export interface ModalStructure {
 export interface UiLoadingStructure {
   user: { isLogged: boolean; token: string };
   ui: {
-    isLoading: true;
+    isLoading: boolean;
+    modal: { isError: boolean; message: string };
+  };
+}
+
+export interface NotLoggedUser {
+  user: { isLogged: boolean; token: string };
+  ui: {
+    isLoading: boolean;
     modal: { isError: boolean; message: string };
   };
 }
