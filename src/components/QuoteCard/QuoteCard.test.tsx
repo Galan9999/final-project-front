@@ -1,7 +1,17 @@
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { mockedPreloadeStoreLoggedState } from "../../mocks/quotesPreloadedStates";
 import { QuoteStructure } from "../../types";
-import renderRouterWithProviders from "../../utils/testUtils/renderRouterWithProviders";
+import renderRouterWithProviders, {
+  RouterRenderOptions,
+} from "../../utils/testUtils/renderRouterWithProviders";
 import QuoteCard from "./QuoteCard";
+
+const mockDeleteQuote = jest.fn();
+
+jest.mock("../../hooks/useQuotesApi/useQuotesApi", () => () => ({
+  deleteQuoteById: mockDeleteQuote,
+}));
 
 const mockCard: QuoteStructure = {
   id: "1",
@@ -31,6 +41,25 @@ describe("Given the QuoteCard component", () => {
       });
 
       expect(authorName).toBeInTheDocument();
+    });
+  });
+
+  describe("When a logged user press delete button", () => {
+    test("Then it should call deletQuoteById function", async () => {
+      const routeAndState: RouterRenderOptions = {
+        ui: <QuoteCard quote={mockCard} />,
+        preloadedState: mockedPreloadeStoreLoggedState,
+      };
+
+      renderRouterWithProviders(routeAndState);
+
+      const renderedButton = screen.getByRole("button", { name: "delete" });
+
+      await waitFor(async () => {
+        await userEvent.click(renderedButton);
+      });
+
+      expect(mockDeleteQuote).toBeCalledWith(mockCard.id);
     });
   });
 });

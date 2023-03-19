@@ -1,4 +1,9 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import useQuotesApi from "../../hooks/useQuotesApi/useQuotesApi";
+import { useAppSelector } from "../../store/hooks";
 import { QuoteStructure } from "../../types";
+import Button from "../Button/Button";
 import QuoteCardStyled from "./QuoteCardStyled";
 
 interface QuoteCardProps {
@@ -6,6 +11,12 @@ interface QuoteCardProps {
 }
 
 const QuoteCard = ({ quote }: QuoteCardProps): JSX.Element => {
+  const { isLogged } = useAppSelector((state) => state.user);
+  const { deleteQuoteById } = useQuotesApi();
+
+  const deleteIcon = (
+    <FontAwesomeIcon className="card__icon" icon={faTrashCan} />
+  );
   return (
     <QuoteCardStyled className="card">
       <img
@@ -15,14 +26,26 @@ const QuoteCard = ({ quote }: QuoteCardProps): JSX.Element => {
         height={130}
         width={130}
       />
+
       <p className="card__quote" aria-label="a quote from an author">
         {quote.quote}
       </p>
 
       <h2 className="card__author"> {quote.author}</h2>
-      <span className="card__tags" aria-label="tags">
-        #{quote.tags}
-      </span>
+
+      <div className="bottom-container">
+        <span className="card__tags" aria-label="tags">
+          #{quote.tags}
+        </span>
+        {isLogged && (
+          <Button
+            icon={deleteIcon}
+            className={"delete"}
+            ariaLabel={"delete"}
+            action={() => deleteQuoteById(quote.id)}
+          />
+        )}
+      </div>
     </QuoteCardStyled>
   );
 };
