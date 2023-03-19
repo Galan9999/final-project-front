@@ -1,7 +1,12 @@
 import Quotes from "../../components/Quotes/Quotes";
+import HomePageStyled from "./HomePageStyled";
 
 const HomePage = (): JSX.Element => {
-  return <Quotes />;
+  return (
+    <HomePageStyled className="home">
+      <Quotes />
+    </HomePageStyled>
+  );
 };
 
 export default HomePage;

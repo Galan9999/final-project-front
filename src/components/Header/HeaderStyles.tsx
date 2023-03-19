@@ -5,7 +5,6 @@ const HeaderStyled = styled.div`
   align-items: center;
   background-color: ${(props) => props.theme.colors.secondaryColor};
   padding: ${(props) => props.theme.padding};
-  border-radius: ${(props) => props.theme.borderRadius};
   width: 100%;
 
   .header {

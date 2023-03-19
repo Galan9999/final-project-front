@@ -5,14 +5,19 @@ const QuoteCardStyled = styled.article`
   flex-direction: column;
   gap: 10px;
   background-color: ${(props) => props.theme.colors.mainColor};
-  border: none;
   border-radius: 20px;
-  box-shadow: 8px 5px 15px black;
+  margin-inline: 10px;
+  box-shadow: 8px 5px 15px grey;
   padding: 20px;
   text-align: center;
   align-items: center;
 
   .card {
+    &__image-container {
+      display: flex;
+      flex-direction: row;
+    }
+
     &__image {
       border-radius: 50%;
       object-fit: cover;
@@ -28,6 +33,22 @@ const QuoteCardStyled = styled.article`
     &__tags {
       font-size: ${(props) => props.theme.fontSize.mediumSize};
       align-self: flex-start;
+    }
+  }
+  .bottom-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .delete {
+    padding: 0px;
+    align-self: flex-end;
+    justify-content: right;
+    > svg {
+      width: 35px;
+      height: 35px;
     }
   }
 `;

@@ -13,7 +13,6 @@ box-sizing: border-box;
 body {
   margin: 0;
   font-family: 'Belleza', sans serif;
-  padding: 20px 10px;
   background-color: white;
   min-height: 100vh;
 }
