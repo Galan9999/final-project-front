@@ -96,3 +96,39 @@ describe("Given the useUserApi function", () => {
     });
   });
 });
+
+describe("Given getStorageToken", () => {
+  describe("When it is called and there isnt a token in the local storage", () => {
+    test("Then it shouldnt login the user", () => {
+      const {
+        result: {
+          current: { checkStorageToken },
+        },
+      } = renderHook(() => useUserApi(), { wrapper: Wrapper });
+
+      checkStorageToken();
+
+      expect(spiedDispatch).not.toBeCalled();
+    });
+  });
+
+  describe("When it is called and there is a token in the local storage", () => {
+    test("Then it should login the user", () => {
+      const {
+        result: {
+          current: { checkStorageToken },
+        },
+      } = renderHook(() => useUserApi(), { wrapper: Wrapper });
+
+      localStorage.setItem("token", "token");
+
+      const expectedDispatchCaller = loginUserActionCreator("token");
+
+      checkStorageToken();
+
+      expect(spiedDispatch).toBeCalledWith(expectedDispatchCaller);
+
+      localStorage.removeItem("token");
+    });
+  });
+});
