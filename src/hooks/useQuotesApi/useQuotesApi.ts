@@ -9,8 +9,8 @@ import {
   setIsSuccessModalActionCreator,
   unsetIsLoadingActionCreator,
 } from "../../store/features/ui/uiSlice";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { QuotesStructure, QuoteStructure } from "../../types";
+import { useAppDispatch } from "../../store/hooks";
+import { QuotesStructure } from "../../types";
 import { errorTypes, succesTypes } from "../types";
 
 const { defaultErrorMessage, cuotesNotFoundErrorMessage } = errorTypes;
@@ -18,13 +18,10 @@ const { successDeleting } = succesTypes;
 
 const quotesRelativePath = "/quotes";
 const deleteRelativePath = "/delete";
-const byIdRelativePath = "/:id";
 
 const useQuotesApi = () => {
   const dispatch = useAppDispatch();
   const uiDispatch = useAppDispatch();
-
-  const { token } = useAppSelector((state) => state.user);
 
   const loadQuotes = useCallback(async () => {
     try {
@@ -52,16 +49,15 @@ const useQuotesApi = () => {
   }, [dispatch, uiDispatch]);
 
   const deleteQuoteById = useCallback(
-    async (quote: QuoteStructure) => {
+    async (id: string) => {
       try {
         uiDispatch(setIsLoadingActionCreator());
         const response = await fetch(
-          `${process.env.REACT_APP_URL_API_USERS}${quotesRelativePath}${deleteRelativePath}${byIdRelativePath}`,
+          `${process.env.REACT_APP_URL_API_USERS}${quotesRelativePath}${deleteRelativePath}/${id}`,
           {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
             },
           }
         );
@@ -70,7 +66,7 @@ const useQuotesApi = () => {
           throw new Error(defaultErrorMessage);
         }
 
-        dispatch(deleteQuoteByIdActionCreator(quote.id));
+        dispatch(deleteQuoteByIdActionCreator(id));
 
         uiDispatch(unsetIsLoadingActionCreator());
 
@@ -81,7 +77,7 @@ const useQuotesApi = () => {
         dispatch(setIsErrorModalActionCreator((error as Error).message));
       }
     },
-    [dispatch, uiDispatch, token]
+    [dispatch, uiDispatch]
   );
 
   return { loadQuotes, deleteQuoteById };
