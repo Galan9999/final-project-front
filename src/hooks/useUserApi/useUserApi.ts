@@ -11,6 +11,7 @@ import {
   logoutUserActionCreator,
 } from "../../store/features/user/userSlice";
 import { errorTypes } from "../types";
+import { useCallback } from "react";
 
 const ApiUrl = process.env.REACT_APP_URL_API_USERS;
 const userEndpoint = "/users";
@@ -58,6 +59,15 @@ const useUserApi = () => {
     dispatch(logoutUserActionCreator());
   };
 
-  return { loginUser, logOutUser };
+  const checkStorageToken = useCallback(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return;
+    }
+
+    dispatch(loginUserActionCreator(token));
+  }, [dispatch]);
+
+  return { loginUser, logOutUser, checkStorageToken };
 };
 export default useUserApi;
