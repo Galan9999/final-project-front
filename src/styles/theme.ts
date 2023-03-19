@@ -7,7 +7,8 @@ const theme: DefaultTheme = {
   colors: {
     mainColor: "#C4B73D",
     secondaryColor: "#D2C128",
-    textColor: "#000000",
+    mainTextColor: "#000000",
+    seconadryTextColor: "grey",
   },
   fontSize: {
     bigSize: "24px",
