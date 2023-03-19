@@ -120,7 +120,7 @@ describe("Given the useQuotesApi function", () => {
         },
       } = renderHook(() => useQuotesApi(), { wrapper: Wrapper });
 
-      await deleteQuoteById(mockedQuote);
+      await deleteQuoteById(mockedQuote.id);
 
       expect(spiedDispatch).toHaveBeenNthCalledWith(
         2,
@@ -145,7 +145,7 @@ describe("Given the useQuotesApi function", () => {
         },
       } = renderHook(() => useQuotesApi(), { wrapper: Wrapper });
 
-      await deleteQuoteById(mockedQuote);
+      await deleteQuoteById(mockedQuote.id);
 
       expect(spiedDispatch).toHaveBeenNthCalledWith(
         1,
