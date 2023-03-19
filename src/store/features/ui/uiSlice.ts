@@ -6,6 +6,7 @@ const initialState: UiStructure = {
   modal: {
     message: "",
     isError: false,
+    isSuccess: false,
   },
 };
 
@@ -40,6 +41,25 @@ const uiSlice = createSlice({
         isError: initialState.modal.isError,
       },
     }),
+    setIsSuccessModal: (
+      currentUiState: UiStructure,
+      { payload }: PayloadAction<string>
+    ): UiStructure => ({
+      ...currentUiState,
+      modal: {
+        ...currentUiState.modal,
+        message: payload,
+        isSuccess: true,
+      },
+    }),
+    unsetIsSuccessModal: (currentUiState: UiStructure): UiStructure => ({
+      ...currentUiState,
+      modal: {
+        ...currentUiState.modal,
+        message: initialState.modal.message,
+        isSuccess: initialState.modal.isSuccess,
+      },
+    }),
   },
 });
 export const {
@@ -47,5 +67,7 @@ export const {
   unsetIsLoading: unsetIsLoadingActionCreator,
   setIsErrorModal: setIsErrorModalActionCreator,
   unsetIsErrorModal: unsetIsErrorModalActionCreator,
+  setIsSuccessModal: setIsSuccessModalActionCreator,
+  unsetIsSuccessModal: unsetIsSuccessModalActionCreator,
 } = uiSlice.actions;
 export const uiReducer = uiSlice.reducer;

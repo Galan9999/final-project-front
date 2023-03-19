@@ -2,18 +2,24 @@ import { renderHook } from "@testing-library/react";
 import { errorHandlers } from "../../mocks/handlers";
 import { server } from "../../mocks/server";
 import Wrapper from "../../mocks/Wrapper";
-import { loadQuotesActionCreator } from "../../store/features/quotes/quotesSlice";
+import {
+  deleteQuoteByIdActionCreator,
+  loadQuotesActionCreator,
+} from "../../store/features/quotes/quotesSlice";
 import {
   setIsErrorModalActionCreator,
+  setIsLoadingActionCreator,
+  setIsSuccessModalActionCreator,
   unsetIsLoadingActionCreator,
 } from "../../store/features/ui/uiSlice";
 import { store } from "../../store/store";
-import { errorTypes } from "../types";
+import { errorTypes, succesTypes } from "../types";
 import useQuotesApi from "./useQuotesApi";
 
 const spiedDispatch = jest.spyOn(store, "dispatch");
 
 const { cuotesNotFoundErrorMessage, defaultErrorMessage } = errorTypes;
+const { successDeleting } = succesTypes;
 
 afterEach(() => jest.clearAllMocks());
 
@@ -32,6 +38,19 @@ const mockedQuotes = {
         "Frida Kahlo was a Mexican painter known for her self-portraits, which often incorporated elements of her physical and emotional pain.",
     },
   ],
+};
+
+const mockedQuote = {
+  id: "1",
+  author: "Frida Kahlo",
+  image:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Frida_Kahlo%2C_by_Guillermo_Kahlo.jpg/440px-Frida_Kahlo%2C_by_Guillermo_Kahlo.jpg",
+  country: "Mexico",
+  quote: "Feet, what do I need them for if I have wings to fly?",
+  tags: ["artists"],
+  lived: "1907 - 1954",
+  backgroundInfo:
+    "Frida Kahlo was a Mexican painter known for her self-portraits, which often incorporated elements of her physical and emotional pain.",
 };
 
 describe("Given the useQuotesApi function", () => {
@@ -62,11 +81,15 @@ describe("Given the useQuotesApi function", () => {
         },
       } = renderHook(() => useQuotesApi(), { wrapper: Wrapper });
 
+      const setIsErrorModalAction = setIsErrorModalActionCreator(
+        cuotesNotFoundErrorMessage
+      );
+
       await loadQuotes();
 
-      expect(spiedDispatch).toHaveBeenCalledWith(
-        setIsErrorModalActionCreator(cuotesNotFoundErrorMessage)
-      );
+      expect(spiedDispatch).toHaveBeenCalledWith(setIsLoadingActionCreator());
+      expect(spiedDispatch).toHaveBeenCalledWith(setIsErrorModalAction);
+      expect(spiedDispatch).toHaveBeenCalledWith(unsetIsLoadingActionCreator());
     });
   });
 
@@ -83,8 +106,59 @@ describe("Given the useQuotesApi function", () => {
 
       await loadQuotes();
 
-      expect(spiedDispatch).toHaveBeenCalledWith(unsetIsLoadingActionCreator());
       expect(spiedDispatch).toHaveBeenCalledWith(
+        setIsErrorModalActionCreator(defaultErrorMessage)
+      );
+    });
+  });
+
+  describe("When its deleteQuoteById function is called", () => {
+    test("Then it should call its dispatch method with message 'Successfully deleted!'", async () => {
+      const {
+        result: {
+          current: { deleteQuoteById },
+        },
+      } = renderHook(() => useQuotesApi(), { wrapper: Wrapper });
+
+      await deleteQuoteById(mockedQuote);
+
+      expect(spiedDispatch).toHaveBeenNthCalledWith(
+        2,
+        deleteQuoteByIdActionCreator(mockedQuote.id)
+      );
+
+      expect(spiedDispatch).toHaveBeenNthCalledWith(
+        4,
+        setIsSuccessModalActionCreator(successDeleting)
+      );
+    });
+  });
+
+  describe("When its deleteCoinById function is called but fails", () => {
+    beforeEach(() => {
+      server.resetHandlers(...errorHandlers);
+    });
+    test("Then it should call the dispatch method with setIsErrorModal with the message 'Something Went Wrong'", async () => {
+      const {
+        result: {
+          current: { deleteQuoteById },
+        },
+      } = renderHook(() => useQuotesApi(), { wrapper: Wrapper });
+
+      await deleteQuoteById(mockedQuote);
+
+      expect(spiedDispatch).toHaveBeenNthCalledWith(
+        1,
+        setIsLoadingActionCreator()
+      );
+
+      expect(spiedDispatch).toHaveBeenNthCalledWith(
+        2,
+        unsetIsLoadingActionCreator()
+      );
+
+      expect(spiedDispatch).toHaveBeenNthCalledWith(
+        3,
         setIsErrorModalActionCreator(defaultErrorMessage)
       );
     });

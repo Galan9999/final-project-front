@@ -2,9 +2,11 @@ import { UiStructure } from "../../../types";
 import {
   setIsErrorModalActionCreator,
   setIsLoadingActionCreator,
+  setIsSuccessModalActionCreator,
   uiReducer,
   unsetIsErrorModalActionCreator,
   unsetIsLoadingActionCreator,
+  unsetIsSuccessModalActionCreator,
 } from "./uiSlice";
 
 describe("Given the uiSlice reducer function", () => {
@@ -15,6 +17,7 @@ describe("Given the uiSlice reducer function", () => {
         modal: {
           isError: false,
           message: "",
+          isSuccess: false,
         },
       };
       const expectedUiState: UiStructure = {
@@ -22,6 +25,7 @@ describe("Given the uiSlice reducer function", () => {
         modal: {
           isError: false,
           message: "",
+          isSuccess: false,
         },
       };
       const newUiState = uiReducer(currentUiState, setIsLoadingActionCreator());
@@ -37,6 +41,7 @@ describe("Given the uiSlice reducer function", () => {
         modal: {
           isError: false,
           message: "",
+          isSuccess: false,
         },
       };
       const expectedUiState: UiStructure = {
@@ -44,6 +49,7 @@ describe("Given the uiSlice reducer function", () => {
         modal: {
           isError: false,
           message: "",
+          isSuccess: false,
         },
       };
 
@@ -63,6 +69,7 @@ describe("Given the uiSlice reducer function", () => {
         modal: {
           isError: false,
           message: "",
+          isSuccess: false,
         },
       };
       const expectedUiState: UiStructure = {
@@ -70,6 +77,7 @@ describe("Given the uiSlice reducer function", () => {
         modal: {
           isError: true,
           message: "error message",
+          isSuccess: false,
         },
       };
 
@@ -88,6 +96,7 @@ describe("Given the uiSlice reducer function", () => {
         modal: {
           isError: false,
           message: "",
+          isSuccess: false,
         },
       };
       const expectedUiState: UiStructure = {
@@ -95,12 +104,67 @@ describe("Given the uiSlice reducer function", () => {
         modal: {
           isError: false,
           message: "",
+          isSuccess: false,
         },
       };
 
       const newUiState = uiReducer(
         currentUiState,
         unsetIsErrorModalActionCreator()
+      );
+
+      expect(newUiState).toStrictEqual(expectedUiState);
+    });
+  });
+  describe("When it receives the setIsSucces action", () => {
+    test("Then it should set isSuccess to true with success message", () => {
+      const currentUiState: UiStructure = {
+        isLoading: true,
+        modal: {
+          isError: false,
+          message: "",
+          isSuccess: false,
+        },
+      };
+      const expectedUiState: UiStructure = {
+        isLoading: true,
+        modal: {
+          isError: false,
+          message: "success message",
+          isSuccess: true,
+        },
+      };
+
+      const newUiState = uiReducer(
+        currentUiState,
+        setIsSuccessModalActionCreator(expectedUiState.modal.message)
+      );
+
+      expect(newUiState).toStrictEqual(expectedUiState);
+    });
+  });
+  describe("When it receives the unsetIsSuccessModal action", () => {
+    test("Then it should set isSuccessModal to false", () => {
+      const currentUiState: UiStructure = {
+        isLoading: true,
+        modal: {
+          isError: false,
+          message: "",
+          isSuccess: true,
+        },
+      };
+      const expectedUiState: UiStructure = {
+        isLoading: true,
+        modal: {
+          isError: false,
+          message: "",
+          isSuccess: false,
+        },
+      };
+
+      const newUiState = uiReducer(
+        currentUiState,
+        unsetIsSuccessModalActionCreator()
       );
 
       expect(newUiState).toStrictEqual(expectedUiState);

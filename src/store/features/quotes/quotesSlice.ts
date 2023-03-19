@@ -15,15 +15,20 @@ const initialState: QuotesStructure = [
 ];
 
 const quotesSlice = createSlice({
-  name: "quotes",
+  name: "quote",
   initialState,
   reducers: {
     loadQuotes: (
-      currentState: QuotesStructure,
-      action: PayloadAction<QuotesStructure>
-    ): QuotesStructure => [...action.payload],
+      currentQuoteState,
+      { payload }: PayloadAction<QuotesStructure>
+    ): QuotesStructure => [...payload],
+    deleteByIdQuote: (currentQuoteState, { payload }: PayloadAction<string>) =>
+      currentQuoteState.filter((quote) => quote.id !== payload),
   },
 });
 
-export const { loadQuotes: loadQuotesActionCreator } = quotesSlice.actions;
+export const {
+  loadQuotes: loadQuotesActionCreator,
+  deleteByIdQuote: deleteQuoteByIdActionCreator,
+} = quotesSlice.actions;
 export const quotesReducer = quotesSlice.reducer;

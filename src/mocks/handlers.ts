@@ -2,10 +2,15 @@ import { rest } from "msw";
 import { errorTypes } from "../hooks/types";
 
 const {
-  defaultErrorMessage,
   unauthorizedErrorMessage,
-  userNotFoundErrorMessage,
+  cuotesNotFoundErrorMessage,
+  defaultErrorMessage,
 } = errorTypes;
+
+const quotesRelativePath = "/quotes";
+const deleteRelativePath = "/delete";
+const byIdRelativePath = "/:id";
+const loginRealtivePath = "/users/login";
 
 const mockedQuotes = {
   quotes: [
@@ -28,24 +33,40 @@ const mockedQuotes = {
 const useUserApiUrl = process.env.REACT_APP_URL_API_USERS;
 
 export const okHandlers = [
-  rest.post(`${useUserApiUrl}/users/login`, async (req, res, ctx) => {
+  rest.post(`${useUserApiUrl}${loginRealtivePath}`, async (req, res, ctx) => {
     return res(ctx.status(200), ctx.json({ token: "token" }));
   }),
 
-  rest.get(`${useUserApiUrl}/quotes`, async (req, res, ctx) => {
+  rest.get(`${useUserApiUrl}${quotesRelativePath}`, async (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(mockedQuotes));
   }),
+
+  rest.delete(
+    `${useUserApiUrl}${quotesRelativePath}${deleteRelativePath}${byIdRelativePath}`,
+    async (req, res, ctx) => {
+      return res(ctx.status(200), ctx.json(mockedQuotes));
+    }
+  ),
 ];
 
 export const errorHandlers = [
-  rest.post(`${useUserApiUrl}/users/login`, async (req, res, ctx) => {
+  rest.post(`${useUserApiUrl}${loginRealtivePath}`, async (req, res, ctx) => {
     return res(ctx.status(401), ctx.json({ error: unauthorizedErrorMessage }));
   }),
 
-  rest.get(`${useUserApiUrl}/quotes`, async (req, res, ctx) => {
-    return res(ctx.status(404), ctx.json({ error: userNotFoundErrorMessage }));
+  rest.get(`${useUserApiUrl}${quotesRelativePath}`, async (req, res, ctx) => {
+    return res(
+      ctx.status(404),
+      ctx.json({ error: cuotesNotFoundErrorMessage })
+    );
   }),
-  rest.get(`${useUserApiUrl}/quotes`, async (req, res, ctx) => {
+  rest.get(`${useUserApiUrl}${quotesRelativePath}`, async (req, res, ctx) => {
     return res(ctx.status(500), ctx.json({ error: defaultErrorMessage }));
   }),
+  rest.delete(
+    `${useUserApiUrl}${quotesRelativePath}${deleteRelativePath}${byIdRelativePath}`,
+    async (req, res, ctx) => {
+      return res(ctx.status(404), ctx.json({ error: defaultErrorMessage }));
+    }
+  ),
 ];

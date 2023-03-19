@@ -1,21 +1,35 @@
 import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
+import {
+  unsetIsErrorModalActionCreator,
+  unsetIsSuccessModalActionCreator,
+} from "../../store/features/ui/uiSlice";
 
-import { useAppSelector } from "../../store/hooks";
-import getModals from "./getModals";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { showErrorModal, showSuccessModal } from "./getModals";
 
 const Modal = (): JSX.Element => {
   const {
-    modal: { isError, message },
+    modal: { isError, message, isSuccess },
   } = useAppSelector((state) => state.ui);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (isError) {
-      getModals(message);
+      showErrorModal(message);
+      dispatch(unsetIsErrorModalActionCreator());
     }
-  }, [isError, message]);
+  }, [isError, message, dispatch]);
 
-  return <ToastContainer pauseOnFocusLoss />;
+  useEffect(() => {
+    if (isSuccess) {
+      showSuccessModal(message);
+      dispatch(unsetIsSuccessModalActionCreator());
+    }
+  }, [isSuccess, message, dispatch]);
+
+  return <ToastContainer />;
 };
 
 export default Modal;
