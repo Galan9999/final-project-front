@@ -25,7 +25,10 @@ export const mockedQuotes: QuotesStructure = [
 
 export const mockedPreloadeStoreWithListState: StoreStructure = {
   user: { isLogged: false, token: "" },
-  ui: { isLoading: false, modal: { isError: false, message: "" } },
+  ui: {
+    isLoading: false,
+    modal: { isError: false, message: "", isSuccess: false },
+  },
   quotes: [
     {
       id: "1",
@@ -52,7 +55,10 @@ export const mockedPreloadeStoreWithListState: StoreStructure = {
 
 export const mockedPreloadeStoreLoggedState: StoreStructure = {
   user: { isLogged: true, token: "tokensito" },
-  ui: { isLoading: false, modal: { isError: false, message: "" } },
+  ui: {
+    isLoading: false,
+    modal: { isError: false, message: "", isSuccess: false },
+  },
   quotes: [
     {
       id: "1",

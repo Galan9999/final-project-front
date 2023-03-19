@@ -5,10 +5,14 @@ export const preloadedErrorUiState: UiStructure = {
   modal: {
     message: "Invalid Credentials!",
     isError: true,
+    isSuccess: false,
   },
 };
 
 export const preloadedIsLoadingUiState: UiLoadingStructure = {
   user: { isLogged: false, token: "" },
-  ui: { isLoading: true, modal: { isError: false, message: "" } },
+  ui: {
+    isLoading: true,
+    modal: { isError: false, message: "", isSuccess: false },
+  },
 };
