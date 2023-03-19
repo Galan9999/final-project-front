@@ -1,11 +1,33 @@
 import ButtonStyled from "./ButtonStyled";
 
 interface ButtonProps {
-  text: string;
+  text?: string;
+  icon?: JSX.Element;
+  action?: () => void;
+  isDisabled?: boolean;
+  className?: string;
+  ariaLabel?: string;
 }
 
-const Button = ({ text }: ButtonProps): JSX.Element => {
-  return <ButtonStyled type="submit">{text}</ButtonStyled>;
+const Button = ({
+  text,
+  action,
+  ariaLabel,
+  className,
+  icon,
+  isDisabled,
+}: ButtonProps): JSX.Element => {
+  return (
+    <ButtonStyled
+      className={className}
+      onClick={action}
+      aria-label={ariaLabel}
+      disabled={isDisabled}
+    >
+      {text}
+      {icon}
+    </ButtonStyled>
+  );
 };
 
 export default Button;
