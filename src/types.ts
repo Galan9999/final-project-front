@@ -19,13 +19,14 @@ export interface UiStructure {
 export interface ModalStructure {
   message: string;
   isError: boolean;
+  isSuccess: boolean;
 }
 
 export interface UiLoadingStructure {
   user: { isLogged: boolean; token: string };
   ui: {
     isLoading: boolean;
-    modal: { isError: boolean; message: string };
+    modal: { isError: boolean; message: string; isSuccess: boolean };
   };
 }
 
@@ -54,7 +55,7 @@ export interface StoreStructure {
   user: { isLogged: boolean; token: string };
   ui: {
     isLoading: boolean;
-    modal: { isError: boolean; message: string };
+    modal: { isError: boolean; message: string; isSuccess: boolean };
   };
   quotes: QuotesStructure;
 }
