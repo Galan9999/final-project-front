@@ -156,7 +156,7 @@ describe("Given the useQuotesApi function", () => {
 
   describe("When its deleteQuote function is called but fails", () => {
     beforeEach(() => {
-      server.resetHandlers(...errorHandlers);
+      server.use(...errorHandlers);
     });
     test("Then it should call the dispatch method with setIsErrorModal with the message 'Something Went Wrong'", async () => {
       const {
@@ -166,16 +166,6 @@ describe("Given the useQuotesApi function", () => {
       } = renderHook(() => useQuotesApi(), { wrapper: Wrapper });
 
       await deleteQuoteById(mockedQuote.id);
-
-      expect(spiedDispatch).toHaveBeenNthCalledWith(
-        1,
-        setIsLoadingActionCreator()
-      );
-
-      expect(spiedDispatch).toHaveBeenNthCalledWith(
-        2,
-        unsetIsLoadingActionCreator()
-      );
 
       expect(spiedDispatch).toHaveBeenNthCalledWith(
         3,

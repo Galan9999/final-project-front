@@ -18,7 +18,6 @@ const { defaultErrorMessage, cuotesNotFoundErrorMessage } = errorTypes;
 const { successDeleting, successCreating } = succesTypes;
 
 const quotesRelativePath = "/quotes";
-const deleteRelativePath = "/delete";
 const createRealtivePath = "/create";
 const root = "/";
 
@@ -60,7 +59,7 @@ const useQuotesApi = () => {
       try {
         uiDispatch(setIsLoadingActionCreator());
         const response = await fetch(
-          `${process.env.REACT_APP_URL_API_USERS}${quotesRelativePath}${deleteRelativePath}/${id}`,
+          `${process.env.REACT_APP_URL_API_USERS}${quotesRelativePath}/${id}`,
           {
             method: "DELETE",
             headers: {
