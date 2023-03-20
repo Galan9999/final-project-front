@@ -40,8 +40,9 @@ describe("Given the Header component", () => {
   });
 
   describe("When it is rendered with a user logged in and user click on logout button", () => {
-    test("Then it should show a", async () => {
-      const myListRoute = "link to my list";
+    test("Then it should show the button to login", async () => {
+      const logoutLabelText = "logout";
+      const loginLabelText = "login";
 
       const routerState: RouterRenderOptions = {
         preloadedState: {
@@ -51,16 +52,13 @@ describe("Given the Header component", () => {
 
       renderRouterWithProviders(routerState);
 
-      const myListLink = screen.getByRole("link", { name: myListRoute });
+      const LogoutLink = screen.getByLabelText(logoutLabelText);
 
       await waitFor(async () => {
-        await userEvent.click(myListLink);
+        await userEvent.click(LogoutLink);
       });
 
-      const loginLink = screen.getByRole("link", {
-        name: myListRoute,
-      });
-
+      const loginLink = screen.getByLabelText(loginLabelText);
       expect(loginLink).toBeInTheDocument();
     });
   });
