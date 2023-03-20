@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/icons/logo.svg";
 import { ReactComponent as RightArrow } from "../../assets/icons/rightArrow.svg";
 import { ReactComponent as BackArrow } from "../../assets/icons/backArrow.svg";
-import { ReactComponent as MyList } from "../../assets/icons/myList.svg";
+import { ReactComponent as Create } from "../../assets/icons/create.svg";
 import { ReactComponent as Home } from "../../assets/icons/home.svg";
 
 import { useAppSelector } from "../../store/hooks";
@@ -23,27 +23,29 @@ const Header = (): JSX.Element => {
       </div>
       <div className="header__navigation">
         {isLogged && (
-          <NavLink to="/my-list">
-            <MyList className="header__my-list" aria-label="link to my list" />
+          <NavLink to="/create" aria-label="link to create">
+            <Create className="header__create" aria-label="create image" />
           </NavLink>
         )}
 
         {!isLogged && (
-          <NavLink to="/login" aria-label="login">
-            <RightArrow className="header__login" aria-label="link to login" />
+          <NavLink to="/login" aria-label="link to login">
+            <RightArrow className="header__login" aria-label="login" />
           </NavLink>
         )}
 
         {isLogged && (
-          <BackArrow
-            onClick={logOutUser}
-            className="header__logout"
-            aria-label="logout button"
-          />
+          <NavLink to="/home" aria-label="logout link">
+            <BackArrow
+              onClick={logOutUser}
+              className="header__logout"
+              aria-label="logout"
+            />
+          </NavLink>
         )}
 
-        <NavLink to="/home">
-          <Home className="header__home" aria-label="link to home" />
+        <NavLink to="/home" aria-label="link to home">
+          <Home className="header__home" aria-label="home" />
         </NavLink>
       </div>
     </HeaderStyled>
