@@ -19,7 +19,7 @@ const { successDeleting, successCreating } = succesTypes;
 
 const quotesRelativePath = "/quotes";
 const createRealtivePath = "/create";
-const root = "/";
+const home = "/home";
 
 const useQuotesApi = () => {
   const dispatch = useAppDispatch();
@@ -107,7 +107,7 @@ const useQuotesApi = () => {
           throw new Error(defaultErrorMessage);
         }
         uiDispatch(unsetIsLoadingActionCreator());
-        navigateTo(root);
+        navigateTo(home);
         uiDispatch(setIsSuccessModalActionCreator(successCreating));
       } catch (error) {
         uiDispatch(unsetIsLoadingActionCreator());
