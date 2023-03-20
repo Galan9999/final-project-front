@@ -10,7 +10,6 @@ const {
 } = errorTypes;
 
 const quotesRelativePath = "/quotes";
-const deleteRelativePath = "/delete";
 const byIdRelativePath = "/:id";
 const loginRealtivePath = "/users/login";
 const createRelativePath = "/create";
@@ -57,7 +56,7 @@ export const okHandlers = [
   }),
 
   rest.delete(
-    `${useUserApiUrl}${quotesRelativePath}${deleteRelativePath}${byIdRelativePath}`,
+    `${useUserApiUrl}${quotesRelativePath}${byIdRelativePath}`,
     async (req, res, ctx) => {
       return res(ctx.status(200), ctx.json(mockedQuotes));
     }
@@ -86,7 +85,7 @@ export const errorHandlers = [
     return res(ctx.status(500), ctx.json({ error: defaultErrorMessage }));
   }),
   rest.delete(
-    `${useUserApiUrl}${quotesRelativePath}${deleteRelativePath}${byIdRelativePath}`,
+    `${useUserApiUrl}${quotesRelativePath}${byIdRelativePath}`,
     async (req, res, ctx) => {
       return res(ctx.status(404), ctx.json({ error: defaultErrorMessage }));
     }
