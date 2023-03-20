@@ -25,7 +25,7 @@ const HeaderStyled = styled.div`
       width: 100%;
     }
 
-    &__my-list {
+    &__create {
       width: 60px;
       height: 56px;
       padding-left: 10px;

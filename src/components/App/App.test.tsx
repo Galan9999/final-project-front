@@ -17,20 +17,22 @@ describe("Given the App component", () => {
 
   describe("When the button to login is clicked", () => {
     test("Then it should show the LoginPage with a 'log-in' heading", async () => {
-      const loginRoute = "log-in";
+      const loginRoute = "link to login";
 
-      renderRouterWithProviders({});
+      renderRouterWithProviders({
+        preloadedState: {
+          user: { isLogged: false, token: "token" },
+        },
+      });
 
-      const user = userEvent.setup();
-
-      const loginLink = screen.getByRole("link", { name: "login" });
+      const loginLink = screen.getByRole("link", { name: loginRoute });
 
       await waitFor(async () => {
-        await user.click(loginLink);
+        await userEvent.click(loginLink);
       });
 
       const loginTitle = screen.getByRole("heading", {
-        name: loginRoute,
+        name: "log-in",
         level: 1,
       });
 
