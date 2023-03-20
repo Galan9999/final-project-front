@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   deleteQuoteByIdActionCreator,
   loadQuotesActionCreator,
@@ -9,19 +10,25 @@ import {
   setIsSuccessModalActionCreator,
   unsetIsLoadingActionCreator,
 } from "../../store/features/ui/uiSlice";
-import { useAppDispatch } from "../../store/hooks";
-import { QuotesStructure } from "../../types";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { CreateQuoteStructure, QuotesStructure } from "../../types";
 import { errorTypes, succesTypes } from "../types";
 
 const { defaultErrorMessage, cuotesNotFoundErrorMessage } = errorTypes;
-const { successDeleting } = succesTypes;
+const { successDeleting, successCreating } = succesTypes;
 
 const quotesRelativePath = "/quotes";
 const deleteRelativePath = "/delete";
+const createRealtivePath = "/create";
+const root = "/";
 
 const useQuotesApi = () => {
   const dispatch = useAppDispatch();
   const uiDispatch = useAppDispatch();
+  const navigateTo = useNavigate();
+  const {
+    user: { token },
+  } = useAppSelector((store) => store);
 
   const loadQuotes = useCallback(async () => {
     try {
@@ -58,6 +65,7 @@ const useQuotesApi = () => {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${token} `,
             },
           }
         );
@@ -77,10 +85,41 @@ const useQuotesApi = () => {
         dispatch(setIsErrorModalActionCreator((error as Error).message));
       }
     },
-    [dispatch, uiDispatch]
+    [dispatch, uiDispatch, token]
   );
 
-  return { loadQuotes, deleteQuoteById };
+  const createQuote = useCallback(
+    async (newQuote: CreateQuoteStructure) => {
+      try {
+        uiDispatch(setIsLoadingActionCreator());
+        const response = await fetch(
+          `${process.env.REACT_APP_URL_API_USERS}${quotesRelativePath}${createRealtivePath}`,
+          {
+            method: "POST",
+            body: JSON.stringify(newQuote),
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token} `,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(defaultErrorMessage);
+        }
+        uiDispatch(unsetIsLoadingActionCreator());
+        navigateTo(root);
+        uiDispatch(setIsSuccessModalActionCreator(successCreating));
+      } catch (error) {
+        uiDispatch(unsetIsLoadingActionCreator());
+
+        uiDispatch(setIsErrorModalActionCreator((error as Error).message));
+      }
+    },
+    [uiDispatch, navigateTo, token]
+  );
+
+  return { loadQuotes, deleteQuoteById, createQuote };
 };
 
 export default useQuotesApi;

@@ -8,7 +8,7 @@ const initialState: QuotesStructure = [
     image: "",
     country: "",
     quote: "",
-    tags: [""],
+    tags: "",
     lived: "",
     backgroundInfo: "",
   },

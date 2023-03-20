@@ -4,6 +4,7 @@ interface ErrorTypes {
   userNotFoundErrorMessage: string;
   cuotesNotFoundErrorMessage: string;
   internalServerError: string;
+  createError: string;
 }
 export const errorTypes: ErrorTypes = {
   unauthorizedErrorMessage: "Invalid Credentials!",
@@ -11,12 +12,15 @@ export const errorTypes: ErrorTypes = {
   userNotFoundErrorMessage: "Wrong Credentials!",
   cuotesNotFoundErrorMessage: "Page Not Found!",
   internalServerError: "Something Went Wrong!",
+  createError: "Couldn't create!",
 };
 
 interface SuccesTypes {
   successDeleting: string;
+  successCreating: string;
 }
 
 export const succesTypes: SuccesTypes = {
-  successDeleting: "Successfully deleted",
+  successDeleting: "Successfully deleted!",
+  successCreating: "Successfully created!",
 };

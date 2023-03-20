@@ -7,7 +7,7 @@ export const mockedQuotes: QuotesStructure = [
     image: "",
     country: "",
     quote: "",
-    tags: [""],
+    tags: "",
     lived: "",
     backgroundInfo: "",
   },
@@ -17,7 +17,7 @@ export const mockedQuotes: QuotesStructure = [
     image: "",
     country: "",
     quote: "",
-    tags: [""],
+    tags: "",
     lived: "",
     backgroundInfo: "",
   },
@@ -36,7 +36,7 @@ export const mockedPreloadeStoreWithListState: StoreStructure = {
       image: "image",
       country: "Argentina",
       quote: "hola",
-      tags: [""],
+      tags: "",
       lived: "",
       backgroundInfo: "",
     },
@@ -46,7 +46,7 @@ export const mockedPreloadeStoreWithListState: StoreStructure = {
       image: "image",
       country: "Spain",
       quote: "holi",
-      tags: [""],
+      tags: "",
       lived: "",
       backgroundInfo: "",
     },
@@ -68,7 +68,7 @@ export const mockedPreloadeStoreLoggedState: StoreStructure = {
       country: "United States",
       quote:
         "Change will not come if we wait for some other person or some other time. We are the ones we've been waiting for. We are the change that we seek.",
-      tags: ["politics"],
+      tags: "politics",
       lived: "1961 - present",
       backgroundInfo:
         "Barack Obama is an American politician and attorney who served as the 44th president of the United States from 2009 to 2017.",
@@ -81,7 +81,7 @@ export const mockedPreloadeStoreLoggedState: StoreStructure = {
       country: "Germany",
       quote:
         "Imagination is more important than knowledge. Knowledge is limited. Imagination encircles the world.",
-      tags: ["philosophers"],
+      tags: "philosophers",
       lived: "1879 - 1955",
       backgroundInfo:
         "Albert Einstein was a German-born theoretical physicist who developed the theory of relativity, one of the two pillars of modern physics.",

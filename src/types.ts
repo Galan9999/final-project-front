@@ -44,7 +44,17 @@ export interface QuoteStructure {
   image: string;
   country: string;
   quote: string;
-  tags: string[];
+  tags: string;
+  lived: string;
+  backgroundInfo: string;
+}
+
+export interface CreateQuoteStructure {
+  author: string;
+  image: string;
+  country: string;
+  quote: string;
+  tags: string;
   lived: string;
   backgroundInfo: string;
 }
