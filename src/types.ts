@@ -49,6 +49,16 @@ export interface QuoteStructure {
   backgroundInfo: string;
 }
 
+export interface QuoteFormStructure {
+  author: string;
+  image: string;
+  country: string;
+  quote: string;
+  tags: string;
+  lived: string;
+  backgroundInfo: string;
+}
+
 export interface CreateQuoteStructure {
   author: string;
   image: string;
