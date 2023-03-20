@@ -13,13 +13,21 @@ import {
   unsetIsLoadingActionCreator,
 } from "../../store/features/ui/uiSlice";
 import { store } from "../../store/store";
+import { CreateQuoteStructure } from "../../types";
 import { errorTypes, succesTypes } from "../types";
 import useQuotesApi from "./useQuotesApi";
 
 const spiedDispatch = jest.spyOn(store, "dispatch");
 
 const { cuotesNotFoundErrorMessage, defaultErrorMessage } = errorTypes;
-const { successDeleting } = succesTypes;
+const { successDeleting, successCreating } = succesTypes;
+
+const mockedUsedNavigate = jest.fn();
+
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useNavigate: () => mockedUsedNavigate,
+}));
 
 afterEach(() => jest.clearAllMocks());
 
@@ -32,7 +40,7 @@ const mockedQuotes = {
         "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Frida_Kahlo%2C_by_Guillermo_Kahlo.jpg/440px-Frida_Kahlo%2C_by_Guillermo_Kahlo.jpg",
       country: "Mexico",
       quote: "Feet, what do I need them for if I have wings to fly?",
-      tags: ["artists"],
+      tags: "artists",
       lived: "1907 - 1954",
       backgroundInfo:
         "Frida Kahlo was a Mexican painter known for her self-portraits, which often incorporated elements of her physical and emotional pain.",
@@ -47,14 +55,26 @@ const mockedQuote = {
     "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Frida_Kahlo%2C_by_Guillermo_Kahlo.jpg/440px-Frida_Kahlo%2C_by_Guillermo_Kahlo.jpg",
   country: "Mexico",
   quote: "Feet, what do I need them for if I have wings to fly?",
-  tags: ["artists"],
+  tags: "artists",
+  lived: "1907 - 1954",
+  backgroundInfo:
+    "Frida Kahlo was a Mexican painter known for her self-portraits, which often incorporated elements of her physical and emotional pain.",
+};
+
+const mockedNewQuote: CreateQuoteStructure = {
+  author: "Frida Kahlo",
+  image:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Frida_Kahlo%2C_by_Guillermo_Kahlo.jpg/440px-Frida_Kahlo%2C_by_Guillermo_Kahlo.jpg",
+  country: "Mexico",
+  quote: "Feet, what do I need them for if I have wings to fly?",
+  tags: "artists",
   lived: "1907 - 1954",
   backgroundInfo:
     "Frida Kahlo was a Mexican painter known for her self-portraits, which often incorporated elements of her physical and emotional pain.",
 };
 
 describe("Given the useQuotesApi function", () => {
-  describe("When its called and returns a 200 with a list of quotes", () => {
+  describe("When loadQuotes is called and returns a 200 with a list of quotes", () => {
     test("Then it should call dispatch with loadQuotes action", async () => {
       const {
         result: {
@@ -134,7 +154,7 @@ describe("Given the useQuotesApi function", () => {
     });
   });
 
-  describe("When its deleteCoinById function is called but fails", () => {
+  describe("When its deleteQuote function is called but fails", () => {
     beforeEach(() => {
       server.resetHandlers(...errorHandlers);
     });
@@ -161,6 +181,44 @@ describe("Given the useQuotesApi function", () => {
         3,
         setIsErrorModalActionCreator(defaultErrorMessage)
       );
+    });
+  });
+
+  describe("When createQuote is called and returns a 201 with a new quote created", () => {
+    test("Then it should call dispatch", async () => {
+      const {
+        result: {
+          current: { createQuote },
+        },
+      } = renderHook(() => useQuotesApi(), { wrapper: Wrapper });
+
+      await createQuote(mockedNewQuote);
+
+      expect(spiedDispatch).toHaveBeenNthCalledWith(
+        3,
+        setIsSuccessModalActionCreator(successCreating)
+      );
+    });
+  });
+  describe("When therre is a problem creating", () => {
+    beforeEach(() => {
+      server.use(...errorHandlers);
+    });
+    test("Then it should return and error with message 'Something went wrong!'", async () => {
+      const {
+        result: {
+          current: { createQuote },
+        },
+      } = renderHook(() => useQuotesApi(), { wrapper: Wrapper });
+
+      const setIsErrorModalAction =
+        setIsErrorModalActionCreator(defaultErrorMessage);
+
+      await createQuote(mockedQuote);
+
+      expect(spiedDispatch).toHaveBeenCalledWith(setIsLoadingActionCreator());
+      expect(spiedDispatch).toHaveBeenCalledWith(setIsErrorModalAction);
+      expect(spiedDispatch).toHaveBeenCalledWith(unsetIsLoadingActionCreator());
     });
   });
 });
