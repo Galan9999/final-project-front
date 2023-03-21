@@ -1,7 +1,8 @@
 import { renderHook } from "@testing-library/react";
-import { errorHandlers } from "../../mocks/handlers";
+import { errorHandlers, okHandlers } from "../../mocks/handlers";
 import { server } from "../../mocks/server";
 import Wrapper from "../../mocks/Wrapper";
+import { loadQuoteByIdActionCreator } from "../../store/features/quote/quoteSlice";
 import {
   deleteQuoteByIdActionCreator,
   loadQuotesActionCreator,
@@ -13,7 +14,7 @@ import {
   unsetIsLoadingActionCreator,
 } from "../../store/features/ui/uiSlice";
 import { store } from "../../store/store";
-import { CreateQuoteStructure } from "../../types";
+import { CreateQuoteStructure, QuoteStructure } from "../../types";
 import { errorTypes, succesTypes } from "../types";
 import useQuotesApi from "./useQuotesApi";
 
@@ -48,7 +49,7 @@ const mockedQuotes = {
   ],
 };
 
-const mockedQuote = {
+const mockedQuote: QuoteStructure = {
   id: "1",
   author: "Frida Kahlo",
   image:
@@ -209,6 +210,68 @@ describe("Given the useQuotesApi function", () => {
       expect(spiedDispatch).toHaveBeenCalledWith(setIsLoadingActionCreator());
       expect(spiedDispatch).toHaveBeenCalledWith(setIsErrorModalAction);
       expect(spiedDispatch).toHaveBeenCalledWith(unsetIsLoadingActionCreator());
+    });
+  });
+
+  describe("When loadQuote is called and returns a 200 with a quote", () => {
+    beforeEach(() => {
+      server.resetHandlers(...okHandlers);
+    });
+    test("Then it should call dispatch with loadQuoteById action", async () => {
+      const {
+        result: {
+          current: { loadQuoteById },
+        },
+      } = renderHook(() => useQuotesApi(), { wrapper: Wrapper });
+
+      await loadQuoteById(mockedQuote.id);
+
+      expect(spiedDispatch).toHaveBeenNthCalledWith(
+        2,
+        loadQuoteByIdActionCreator(mockedQuote)
+      );
+    });
+  });
+  describe("Without quote", () => {
+    beforeEach(() => {
+      server.use(...errorHandlers);
+    });
+    test("Then it should return and error with message 'Quote not found!'", async () => {
+      const {
+        result: {
+          current: { loadQuoteById },
+        },
+      } = renderHook(() => useQuotesApi(), { wrapper: Wrapper });
+
+      const setIsErrorModalAction = setIsErrorModalActionCreator(
+        cuotesNotFoundErrorMessage
+      );
+
+      await loadQuoteById(mockedQuote.id);
+
+      expect(spiedDispatch).toHaveBeenCalledWith(setIsLoadingActionCreator());
+      expect(spiedDispatch).toHaveBeenCalledWith(setIsErrorModalAction);
+      expect(spiedDispatch).toHaveBeenCalledWith(unsetIsLoadingActionCreator());
+    });
+  });
+
+  describe("Server problem with the response from the api", () => {
+    beforeEach(() => {
+      server.use(errorHandlers[6]);
+    });
+    test("Then it should return and error with message 'Something Went Wrong!'", async () => {
+      const {
+        result: {
+          current: { loadQuoteById },
+        },
+      } = renderHook(() => useQuotesApi(), { wrapper: Wrapper });
+
+      await loadQuoteById(mockedQuote.id);
+
+      expect(spiedDispatch).toHaveBeenNthCalledWith(
+        3,
+        setIsErrorModalActionCreator(defaultErrorMessage)
+      );
     });
   });
 });
