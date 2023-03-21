@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { loadQuoteByIdActionCreator } from "../../store/features/quote/quoteSlice";
 import {
   deleteQuoteByIdActionCreator,
   loadQuotesActionCreator,
@@ -11,7 +12,11 @@ import {
   unsetIsLoadingActionCreator,
 } from "../../store/features/ui/uiSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { CreateQuoteStructure, QuotesStructure } from "../../types";
+import {
+  CreateQuoteStructure,
+  QuotesStructure,
+  QuoteStructure,
+} from "../../types";
 import { errorTypes, succesTypes } from "../types";
 
 const { defaultErrorMessage, cuotesNotFoundErrorMessage } = errorTypes;
@@ -118,7 +123,44 @@ const useQuotesApi = () => {
     [uiDispatch, navigateTo, token]
   );
 
-  return { loadQuotes, deleteQuoteById, createQuote };
+  const loadQuoteById = useCallback(
+    async (id: string) => {
+      try {
+        uiDispatch(setIsLoadingActionCreator());
+        const response = await fetch(
+          `${process.env.REACT_APP_URL_API_USERS}${quotesRelativePath}/${id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          if (response.status === 404) {
+            throw new Error(cuotesNotFoundErrorMessage);
+          }
+          throw new Error(defaultErrorMessage);
+        }
+        const { quote } = (await response.json()) as {
+          quote: QuoteStructure;
+        };
+
+        dispatch(loadQuoteByIdActionCreator(quote));
+
+        uiDispatch(unsetIsLoadingActionCreator());
+      } catch (error) {
+        uiDispatch(unsetIsLoadingActionCreator());
+
+        uiDispatch(setIsErrorModalActionCreator((error as Error).message));
+      }
+    },
+    [dispatch, uiDispatch, token]
+  );
+
+  return { loadQuotes, deleteQuoteById, createQuote, loadQuoteById };
 };
 
 export default useQuotesApi;
