@@ -74,6 +74,7 @@ const CreateForm = () => {
         name="author"
         id="author"
         type="text"
+        autoComplete="off"
         required
       ></input>
 
@@ -88,6 +89,7 @@ const CreateForm = () => {
         name="image"
         id="image"
         type="text"
+        autoComplete="off"
         required
       ></input>
 
@@ -102,6 +104,7 @@ const CreateForm = () => {
         name="country"
         id="country"
         type="text"
+        autoComplete="off"
         required
       ></input>
 
@@ -116,6 +119,7 @@ const CreateForm = () => {
         name="quote"
         id="quote"
         type="text"
+        autoComplete="off"
         required
       ></input>
 
@@ -130,6 +134,7 @@ const CreateForm = () => {
         name="tags"
         id="tags"
         type="text"
+        autoComplete="off"
         required
       ></input>
 
@@ -144,6 +149,7 @@ const CreateForm = () => {
         name="lived"
         id="lived"
         type="text"
+        autoComplete="off"
         required
       ></input>
 
@@ -158,10 +164,11 @@ const CreateForm = () => {
         name="backgroundInfo"
         id="backgroundInfo"
         type="text"
+        autoComplete="off"
         required
       ></input>
 
-      <Button text="create" />
+      <Button text="create" className="button" />
     </CreateFormStyled>
   );
 };

@@ -1,53 +1,33 @@
 import styled from "styled-components";
 
-const HeaderStyled = styled.div`
+const HeaderStyled = styled.header`
   display: flex;
   align-items: center;
-  background-color: ${(props) => props.theme.colors.secondaryColor};
-  padding: ${(props) => props.theme.padding};
+  justify-content: space-between;
+  background-color: ${(props) => props.theme.colors.terciaryColor};
+  padding: 20px;
   width: 100%;
+  position: fixed;
 
   .header {
     &__container {
-      width: 100%;
-    }
-
-    &__logo {
-      width: 60px;
-      height: 56px;
-      padding-left: 10px;
+      display: flex;
+      justify-content: space-between;
     }
 
     &__navigation {
-      padding-left: 10px;
       display: flex;
-      justify-content: flex-end;
-      width: 100%;
+      justify-content: right;
+      gap: 20px;
     }
 
-    &__create {
-      width: 60px;
-      height: 56px;
-      padding-left: 10px;
-
-      &::isactive {
-        color: black;
-      }
+    &__logo {
+      filter: brightness(10%) saturate(0%) invert(100%) sepia(99%) saturate(1%)
+        hue-rotate(271deg) brightness(104%) contrast(100%);
     }
 
-    &__login {
-      width: 60px;
-      height: 56px;
-    }
-
-    &__logout {
-      width: 60px;
-      height: 56px;
-    }
-
-    &__home {
-      width: 60px;
-      height: 56px;
+    &__icon {
+      color: ${(props) => props.theme.colors.backgroundLightColor};
     }
   }
 `;

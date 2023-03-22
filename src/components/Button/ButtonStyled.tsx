@@ -7,8 +7,7 @@ const ButtonStyled = styled.button`
   color: ${(props) => props.theme.colors.mainTextColor};
   background-color: ${(props) => props.theme.colors.mainColor};
   border-radius: ${(props) => props.theme.borderRadius};
-  padding: ${(props) => props.theme.padding};
-  width: 60%;
+
   align-self: center;
 `;
 export default ButtonStyled;

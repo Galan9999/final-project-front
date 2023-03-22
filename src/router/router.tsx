@@ -1,16 +1,27 @@
-import { createBrowserRouter, Navigate, RouteObject } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouteObject,
+  ScrollRestoration,
+} from "react-router-dom";
 import App from "../components/App/App";
-import CreateForm from "../components/CreateForm/CreateForm";
 import Layout from "../components/Layout/Layout";
 import ProtectedRoutes from "../components/ProtectedRoutes/ProtectedRoutes";
 import UnprotectedRoutes from "../components/UnprotectedRoutes/UnprotectedRoutes";
+import CreatePage from "../pages/CreatePage/CreatePage";
+import DetailPage from "../pages/DetailPage/DetailPage";
 import HomePage from "../pages/HomePage/HomePage";
 import LoginPage from "../pages/LoginPage/LoginPage";
 
 const routes: RouteObject[] = [
   {
     path: "/",
-    element: <App />,
+    element: (
+      <>
+        <App />
+        <ScrollRestoration />
+      </>
+    ),
     errorElement: (
       <Layout>
         <div>Page not found</div>
@@ -20,6 +31,10 @@ const routes: RouteObject[] = [
       {
         path: "/",
         element: <Navigate to={"/home"} />,
+      },
+      {
+        path: "/home",
+        element: <HomePage />,
       },
       {
         path: "/login",
@@ -33,13 +48,13 @@ const routes: RouteObject[] = [
         path: "/create",
         element: (
           <ProtectedRoutes>
-            <CreateForm />
+            <CreatePage />
           </ProtectedRoutes>
         ),
       },
       {
-        path: "/home",
-        element: <HomePage />,
+        path: "/detail/:id",
+        element: <DetailPage />,
       },
     ],
   },

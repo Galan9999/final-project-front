@@ -2,7 +2,7 @@ import { renderHook } from "@testing-library/react";
 import { errorHandlers, okHandlers } from "../../mocks/handlers";
 import { server } from "../../mocks/server";
 import Wrapper from "../../mocks/Wrapper";
-import { loadQuoteByIdActionCreator } from "../../store/features/quote/quoteSlice";
+import { loadQuoteActionCreator } from "../../store/features/quote/quoteSlice";
 import {
   deleteQuoteByIdActionCreator,
   loadQuotesActionCreator,
@@ -217,18 +217,18 @@ describe("Given the useQuotesApi function", () => {
     beforeEach(() => {
       server.resetHandlers(...okHandlers);
     });
-    test("Then it should call dispatch with loadQuoteById action", async () => {
+    test("Then it should call dispatch with loadQuote action", async () => {
       const {
         result: {
-          current: { loadQuoteById },
+          current: { loadQuote },
         },
       } = renderHook(() => useQuotesApi(), { wrapper: Wrapper });
 
-      await loadQuoteById(mockedQuote.id);
+      await loadQuote(mockedQuote.id);
 
       expect(spiedDispatch).toHaveBeenNthCalledWith(
         2,
-        loadQuoteByIdActionCreator(mockedQuote)
+        loadQuoteActionCreator(mockedQuote)
       );
     });
   });
@@ -239,7 +239,7 @@ describe("Given the useQuotesApi function", () => {
     test("Then it should return and error with message 'Quote not found!'", async () => {
       const {
         result: {
-          current: { loadQuoteById },
+          current: { loadQuote },
         },
       } = renderHook(() => useQuotesApi(), { wrapper: Wrapper });
 
@@ -247,7 +247,7 @@ describe("Given the useQuotesApi function", () => {
         cuotesNotFoundErrorMessage
       );
 
-      await loadQuoteById(mockedQuote.id);
+      await loadQuote(mockedQuote.id);
 
       expect(spiedDispatch).toHaveBeenCalledWith(setIsLoadingActionCreator());
       expect(spiedDispatch).toHaveBeenCalledWith(setIsErrorModalAction);
@@ -262,11 +262,11 @@ describe("Given the useQuotesApi function", () => {
     test("Then it should return and error with message 'Something Went Wrong!'", async () => {
       const {
         result: {
-          current: { loadQuoteById },
+          current: { loadQuote },
         },
       } = renderHook(() => useQuotesApi(), { wrapper: Wrapper });
 
-      await loadQuoteById(mockedQuote.id);
+      await loadQuote(mockedQuote.id);
 
       expect(spiedDispatch).toHaveBeenNthCalledWith(
         3,

@@ -28,7 +28,7 @@ const mockCard: QuoteStructure = {
 
 describe("Given the QuoteCard component", () => {
   describe("When its rendered", () => {
-    test("Then it should show a card of René Descartes", () => {
+    test("Then it should show a card of Frida Kahlo", () => {
       const expectedAriaLabelTextName = "Frida Kahlo";
 
       renderRouterWithProviders({

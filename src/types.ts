@@ -79,3 +79,13 @@ export interface StoreStructure {
   };
   quotes: QuotesStructure;
 }
+
+export interface StoreDetailStructure {
+  user: { isLogged: boolean; token: string };
+  ui: {
+    isLoading: boolean;
+    modal: { isError: boolean; message: string; isSuccess: boolean };
+  };
+  quotes: QuotesStructure;
+  quote: QuoteStructure;
+}

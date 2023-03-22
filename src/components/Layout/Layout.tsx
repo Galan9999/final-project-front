@@ -5,6 +5,7 @@ import { useAppSelector } from "../../store/hooks";
 import Header from "../Header/Header";
 import Loader from "../Loader/Loader";
 import Modal from "../Modals/Modal";
+import LayoutStyled from "./LayoutStyled";
 
 const Layout = ({ children }: PropsWithChildren): JSX.Element => {
   const { isLoading } = useAppSelector((state) => state.ui);
@@ -12,14 +13,14 @@ const Layout = ({ children }: PropsWithChildren): JSX.Element => {
 
   useEffect(() => checkStorageToken(), [checkStorageToken]);
   return (
-    <>
+    <LayoutStyled>
       <Header />
       <main>
         {isLoading && <Loader />}
         <Modal />
         <Outlet />
       </main>
-    </>
+    </LayoutStyled>
   );
 };
 

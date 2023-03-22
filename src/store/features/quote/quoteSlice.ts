@@ -16,12 +16,12 @@ const quoteSlice = createSlice({
   name: "quote",
   initialState,
   reducers: {
-    loadQuoteById: (
+    loadQuote: (
       currentQuoteState,
       { payload }: PayloadAction<QuoteStructure>
     ): QuoteStructure => ({ ...payload }),
   },
 });
 
-export const { loadQuoteById: loadQuoteByIdActionCreator } = quoteSlice.actions;
+export const { loadQuote: loadQuoteActionCreator } = quoteSlice.actions;
 export const quoteReducer = quoteSlice.reducer;

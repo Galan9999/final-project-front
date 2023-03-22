@@ -6,15 +6,12 @@ const GlobalStyles = createGlobalStyle`
 box-sizing: border-box;
 }
 
-.root {
-  height:100%;
-}
-
 body {
   margin: 0;
   font-family: 'Belleza', sans serif;
-  background-color: white;
-  min-height: 100vh;
+  background-color:#f1efef;
+  min-height: 100%;
+  min-width: 100%;
 }
 p,
 ul,
@@ -42,6 +39,11 @@ h1,
 h2 {
   font-size: 30px;
   margin: 0;
+}
+
+a, a:visited, a:active {
+  color: inherit;
+  cursor: pointer;
 }
 `;
 
