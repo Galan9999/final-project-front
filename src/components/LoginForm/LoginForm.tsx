@@ -58,7 +58,7 @@ const LoginForm = () => {
         type="password"
         required
       ></input>
-      <Button text="log-in" />
+      <Button className="login-button" text="log-in" />
     </LoginFormStyled>
   );
 };

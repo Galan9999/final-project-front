@@ -1,9 +1,12 @@
 import { NavLink } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/icons/logo.svg";
-import { ReactComponent as RightArrow } from "../../assets/icons/rightArrow.svg";
-import { ReactComponent as BackArrow } from "../../assets/icons/backArrow.svg";
-import { ReactComponent as Create } from "../../assets/icons/create.svg";
-import { ReactComponent as Home } from "../../assets/icons/home.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faFileCirclePlus,
+  faHouse,
+  faRightFromBracket,
+  faUserPlus,
+} from "@fortawesome/free-solid-svg-icons";
 
 import { useAppSelector } from "../../store/hooks";
 import HeaderStyled from "./HeaderStyles";
@@ -24,28 +27,45 @@ const Header = (): JSX.Element => {
       <div className="header__navigation">
         {isLogged && (
           <NavLink to="/create" aria-label="link to create">
-            <Create className="header__create" aria-label="create image" />
+            <FontAwesomeIcon
+              className="header__create header__icon"
+              aria-label="create image"
+              icon={faFileCirclePlus}
+              size={"2x"}
+            />
           </NavLink>
         )}
 
         {!isLogged && (
           <NavLink to="/login" aria-label="link to login">
-            <RightArrow className="header__login" aria-label="login" />
+            <FontAwesomeIcon
+              className="header__login header__icon"
+              aria-label="login"
+              icon={faUserPlus}
+              size={"2x"}
+            />
           </NavLink>
         )}
 
         {isLogged && (
           <NavLink to="/home" aria-label="logout link">
-            <BackArrow
+            <FontAwesomeIcon
               onClick={logOutUser}
-              className="header__logout"
+              className="header__logout header__icon"
               aria-label="logout"
+              icon={faRightFromBracket}
+              size={"2x"}
             />
           </NavLink>
         )}
 
         <NavLink to="/home" aria-label="link to home">
-          <Home className="header__home" aria-label="home" />
+          <FontAwesomeIcon
+            className="header__home header__icon"
+            aria-label="home"
+            icon={faHouse}
+            size={"2x"}
+          />
         </NavLink>
       </div>
     </HeaderStyled>

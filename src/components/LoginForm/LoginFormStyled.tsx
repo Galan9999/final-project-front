@@ -11,6 +11,7 @@ const LoginFormStyled = styled.form`
       height: 60px;
       font-size: ${(props) => props.theme.fontSize.bigSize};
       color: ${(props) => props.theme.colors.mainTextColor};
+      padding: 20px;
     }
     &__label {
       text-transform: capitalize;
@@ -24,6 +25,10 @@ const LoginFormStyled = styled.form`
       flex-direction: column;
       text-align: center;
     }
+  }
+  .login-button {
+    margin: 20px;
+    padding: 20px;
   }
 `;
 

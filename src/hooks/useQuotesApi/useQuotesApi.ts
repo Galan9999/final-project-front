@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { loadQuoteByIdActionCreator } from "../../store/features/quote/quoteSlice";
+import { loadQuoteActionCreator } from "../../store/features/quote/quoteSlice";
 import {
   deleteQuoteByIdActionCreator,
   loadQuotesActionCreator,
@@ -123,7 +123,7 @@ const useQuotesApi = () => {
     [uiDispatch, navigateTo, token]
   );
 
-  const loadQuoteById = useCallback(
+  const loadQuote = useCallback(
     async (id: string) => {
       try {
         uiDispatch(setIsLoadingActionCreator());
@@ -148,7 +148,7 @@ const useQuotesApi = () => {
           quote: QuoteStructure;
         };
 
-        dispatch(loadQuoteByIdActionCreator(quote));
+        dispatch(loadQuoteActionCreator(quote));
 
         uiDispatch(unsetIsLoadingActionCreator());
       } catch (error) {
@@ -160,7 +160,7 @@ const useQuotesApi = () => {
     [dispatch, uiDispatch, token]
   );
 
-  return { loadQuotes, deleteQuoteById, createQuote, loadQuoteById };
+  return { loadQuotes, deleteQuoteById, createQuote, loadQuote };
 };
 
 export default useQuotesApi;

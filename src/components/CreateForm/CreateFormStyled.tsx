@@ -3,14 +3,16 @@ import styled from "styled-components";
 const CreateFormStyled = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
   margin-inline: 10px;
 
   .create-form {
+    padding-top: 120px;
     &__input {
       height: 60px;
       font-size: ${(props) => props.theme.fontSize.bigSize};
       color: ${(props) => props.theme.colors.mainTextColor};
+      padding: 20px;
     }
     &__label {
       text-transform: capitalize;
@@ -24,6 +26,9 @@ const CreateFormStyled = styled.form`
       flex-direction: column;
       text-align: center;
     }
+  }
+  .button {
+    padding: 20px;
   }
 `;
 

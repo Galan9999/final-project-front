@@ -4,7 +4,7 @@ import { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import { RootState, setupStore, store } from "../../store/store";
-import GlobalStyles from "../../styles/GlogablStyles";
+import GlobalStyles from "../../styles/GlobalStyles";
 import theme from "../../styles/theme";
 
 const renderWithProviders = (

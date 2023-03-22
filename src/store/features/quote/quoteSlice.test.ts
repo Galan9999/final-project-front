@@ -1,8 +1,8 @@
 import { QuoteStructure } from "../../../types";
-import { loadQuoteByIdActionCreator, quoteReducer } from "./quoteSlice";
+import { loadQuoteActionCreator, quoteReducer } from "./quoteSlice";
 
 describe("Given the quotes reducer function", () => {
-  describe("When its called with loadQuoteById action", () => {
+  describe("When its called with loadQuote action", () => {
     test("Then it should return a list of quotes", () => {
       const currentQuoteState: QuoteStructure = {
         id: "",
@@ -31,7 +31,7 @@ describe("Given the quotes reducer function", () => {
 
       const newQuoteState = quoteReducer(
         currentQuoteState,
-        loadQuoteByIdActionCreator(expectedQuoteState)
+        loadQuoteActionCreator(expectedQuoteState)
       );
 
       expect(newQuoteState).toStrictEqual(expectedQuoteState);

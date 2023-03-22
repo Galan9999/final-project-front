@@ -3,8 +3,9 @@ import styled from "styled-components";
 const LoginPageStyled = styled.div`
   display: flex;
   flex-direction: column;
+  padding-top: 140px;
   gap: 20px;
-  margin-top: 20px;
+
   .login-page {
     &__title {
       text-align: center;
