@@ -215,7 +215,7 @@ describe("Given the useQuotesApi function", () => {
 
   describe("When loadQuote is called and returns a 200 with a quote", () => {
     beforeEach(() => {
-      server.resetHandlers(...okHandlers);
+      server.use(okHandlers[5]);
     });
     test("Then it should call dispatch with loadQuote action", async () => {
       const {
@@ -226,10 +226,9 @@ describe("Given the useQuotesApi function", () => {
 
       await loadQuote(mockedQuote.id);
 
-      expect(spiedDispatch).toHaveBeenNthCalledWith(
-        2,
-        loadQuoteActionCreator(mockedQuote)
-      );
+      const loadQuoteAction = loadQuoteActionCreator(mockedQuote);
+
+      expect(spiedDispatch).toHaveBeenNthCalledWith(2, loadQuoteAction);
     });
   });
   describe("Without quote", () => {

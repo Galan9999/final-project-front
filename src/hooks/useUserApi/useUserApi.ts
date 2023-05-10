@@ -1,34 +1,60 @@
 import { useAppDispatch } from "../../store/hooks";
-import { LoginCredentials } from "../../types";
+import { LoginCredentials, RegisterCredentials } from "../../types";
 import {
   setIsLoadingActionCreator,
   setIsErrorModalActionCreator,
   unsetIsLoadingActionCreator,
-  unsetIsErrorModalActionCreator,
+  setIsSuccessModalActionCreator,
 } from "../../store/features/ui/uiSlice";
 import {
   loginUserActionCreator,
   logoutUserActionCreator,
 } from "../../store/features/user/userSlice";
-import { errorTypes } from "../types";
+import { errorTypes, succesTypes } from "../types";
 import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ApiUrl = process.env.REACT_APP_URL_API_USERS;
-const userEndpoint = "/users";
-const loginEndpoint = "/login";
+const usersUrl = "/users";
+const loginUrl = "/login";
+const registerUrl = "/register";
 
 const { defaultErrorMessage } = errorTypes;
+const { successRegistering } = succesTypes;
 
 const useUserApi = () => {
   const dispatch = useAppDispatch();
   const uiDispatch = useAppDispatch();
+  const navigateTo = useNavigate();
+
+  const registerUser = async (registerCredentials: RegisterCredentials) => {
+    try {
+      uiDispatch(setIsLoadingActionCreator());
+      const response = await fetch(`${ApiUrl}${usersUrl}${registerUrl}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "applicatin/json",
+        },
+        body: JSON.stringify(registerCredentials),
+      });
+
+      if (!response.ok) {
+        throw new Error();
+      }
+
+      uiDispatch(unsetIsLoadingActionCreator());
+      uiDispatch(setIsSuccessModalActionCreator(successRegistering));
+      navigateTo(loginUrl);
+    } catch (error) {
+      uiDispatch(unsetIsLoadingActionCreator());
+      uiDispatch(setIsErrorModalActionCreator(defaultErrorMessage));
+    }
+  };
 
   const loginUser = async (userCredentials: LoginCredentials) => {
     try {
-      uiDispatch(unsetIsErrorModalActionCreator());
-
       uiDispatch(setIsLoadingActionCreator());
-      const response = await fetch(`${ApiUrl}${userEndpoint}${loginEndpoint}`, {
+      const response = await fetch(`${ApiUrl}${usersUrl}${loginUrl}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -68,6 +94,6 @@ const useUserApi = () => {
     dispatch(loginUserActionCreator(token));
   }, [dispatch]);
 
-  return { loginUser, logOutUser, checkStorageToken };
+  return { loginUser, logOutUser, checkStorageToken, registerUser };
 };
 export default useUserApi;

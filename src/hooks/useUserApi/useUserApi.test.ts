@@ -1,9 +1,10 @@
 import { renderHook } from "@testing-library/react";
 import useUserApi from "./useUserApi";
-import { errorTypes } from "../types";
+import { errorTypes, succesTypes } from "../types";
 import {
   setIsErrorModalActionCreator,
   setIsLoadingActionCreator,
+  setIsSuccessModalActionCreator,
   unsetIsLoadingActionCreator,
 } from "../../store/features/ui/uiSlice";
 import { store } from "../../store/store";
@@ -13,10 +14,22 @@ import {
   logoutUserActionCreator,
 } from "../../store/features/user/userSlice";
 import { server } from "../../mocks/server";
-import { LoginCredentials } from "../../types";
-import { errorHandlers } from "../../mocks/handlers";
+import { LoginCredentials, RegisterCredentials } from "../../types";
+import { errorHandlers, okHandlers } from "../../mocks/handlers";
 
 const { defaultErrorMessage } = errorTypes;
+const { successRegistering } = succesTypes;
+
+const mockedUsedNavigate = jest.fn();
+
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useNavigate: () => mockedUsedNavigate,
+}));
+
+const spiedDispatch = jest.spyOn(store, "dispatch");
+
+beforeAll(() => jest.clearAllMocks());
 
 const mockedRightCredentials: LoginCredentials = {
   username: "Lluis",
@@ -28,12 +41,14 @@ const mockedWrongCredentials: LoginCredentials = {
   password: "1234wefwef56789",
 };
 
-const spiedDispatch = jest.spyOn(store, "dispatch");
-
-beforeAll(() => jest.clearAllMocks());
+const mockedRegisterCredentials: RegisterCredentials = {
+  email: "wcddw@gmail.com",
+  password: "12345678",
+  username: "Carlito",
+};
 
 describe("Given the useUserApi function", () => {
-  describe("When its called with right credentials", () => {
+  describe("When its called with right login credentials", () => {
     const {
       result: {
         current: { loginUser },
@@ -129,6 +144,51 @@ describe("Given getStorageToken", () => {
       expect(spiedDispatch).toBeCalledWith(expectedDispatchCaller);
 
       localStorage.removeItem("token");
+    });
+  });
+});
+describe("Given the useUserApi hook", () => {
+  describe("When its registerUser function is called with register credentials", () => {
+    beforeEach(() => {
+      server.use(okHandlers[5]);
+    });
+    test("Then is should call dispatch method with 'successfully registered!' message", async () => {
+      const {
+        result: {
+          current: { registerUser },
+        },
+      } = renderHook(() => useUserApi(), { wrapper: Wrapper });
+
+      await registerUser(mockedRegisterCredentials);
+
+      const setIsloadinAction = setIsLoadingActionCreator();
+      const unsetIsLoadingAction = unsetIsLoadingActionCreator();
+
+      expect(spiedDispatch).toHaveBeenCalledWith(setIsloadinAction);
+      expect(spiedDispatch).toHaveBeenCalledWith(unsetIsLoadingAction);
+      expect(spiedDispatch).toHaveBeenNthCalledWith(
+        3,
+        setIsSuccessModalActionCreator(successRegistering)
+      );
+    });
+  });
+  describe("When there is an error with the response", () => {
+    beforeEach(() => {
+      server.use(...errorHandlers);
+    });
+    test("Then it shoul call dispatch with error message 'Something Went Wrong!", async () => {
+      const {
+        result: {
+          current: { registerUser },
+        },
+      } = renderHook(() => useUserApi(), { wrapper: Wrapper });
+
+      await registerUser(mockedRegisterCredentials);
+
+      const setIsErrorModalAction =
+        setIsErrorModalActionCreator(defaultErrorMessage);
+
+      expect(spiedDispatch).toHaveBeenLastCalledWith(setIsErrorModalAction);
     });
   });
 });

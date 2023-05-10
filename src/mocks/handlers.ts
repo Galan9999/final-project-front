@@ -13,6 +13,7 @@ const quotesRelativePath = "/quotes";
 const byIdRelativePath = "/:id";
 const loginRealtivePath = "/users/login";
 const createRelativePath = "/create";
+const registerRelativePath = "/users/register";
 
 const mockedQuotes = {
   quotes: [
@@ -84,6 +85,16 @@ export const okHandlers = [
     }
   ),
 
+  rest.post(
+    `${useUserApiUrl}${registerRelativePath}`,
+    async (req, res, ctx) => {
+      return res(
+        ctx.status(201),
+        ctx.json({ message: "user successfully created!" })
+      );
+    }
+  ),
+
   rest.get(
     `${useUserApiUrl}${quotesRelativePath}/${mockedQuote.quote.id}`,
     async (req, res, ctx) => {
@@ -131,6 +142,13 @@ export const errorHandlers = [
     `${useUserApiUrl}${quotesRelativePath}/${mockedQuote.quote.id}`,
     async (req, res, ctx) => {
       return res(ctx.status(500), ctx.json({ error: defaultErrorMessage }));
+    }
+  ),
+
+  rest.post(
+    `${useUserApiUrl}${registerRelativePath}`,
+    async (req, res, ctx) => {
+      return res(ctx.status(409), ctx.json({ error: defaultErrorMessage }));
     }
   ),
 ];

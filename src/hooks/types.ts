@@ -18,9 +18,11 @@ export const errorTypes: ErrorTypes = {
 interface SuccesTypes {
   successDeleting: string;
   successCreating: string;
+  successRegistering: string;
 }
 
 export const succesTypes: SuccesTypes = {
   successDeleting: "Successfully deleted!",
   successCreating: "Successfully created!",
+  successRegistering: "Successfully registered!",
 };
