@@ -18,7 +18,7 @@ const LoginForm = () => {
     setPassword(event.target.value);
   };
 
-  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const loginCredentials: LoginCredentials = {

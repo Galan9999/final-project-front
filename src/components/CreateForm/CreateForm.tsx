@@ -4,7 +4,7 @@ import { QuoteFormStructure } from "../../types";
 import Button from "../Button/Button";
 import CreateFormStyled from "./CreateFormStyled";
 
-const CreateForm = () => {
+const CreateForm = (): JSX.Element => {
   const { createQuote } = useQuotesApi();
 
   const [author, setAuthor] = useState("");
@@ -45,7 +45,7 @@ const CreateForm = () => {
     setBackgroundInfo(event.target.value);
   };
 
-  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData: QuoteFormStructure = {
