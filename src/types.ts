@@ -93,3 +93,8 @@ export interface StoreDetailStructure {
   quotes: QuotesStructure;
   quote: QuoteStructure;
 }
+
+export interface CustomJwtPayload {
+  id: string;
+  username: string;
+}
