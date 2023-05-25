@@ -44,7 +44,7 @@ const CreateForm = (): JSX.Element => {
 
     newQuote.append("owner", id);
 
-    createQuote(formData);
+    await createQuote(formData);
     setFormData({ ...initialState });
   };
 
